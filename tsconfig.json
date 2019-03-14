@@ -1,0 +1,38 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "allowJs": false,
+        "allowSyntheticDefaultImports": true, // This must be false for the React imports to work at both build and run times.
+        "alwaysStrict": true,
+        "baseUrl": ".",
+        "declaration": true,
+        "inlineSources": false,
+        "jsx": "preserve",
+        "lib": [
+            "dom",
+            "es2015",
+            "es2016",
+            "es2017"
+        ],
+        "module": "esnext",
+        "moduleResolution": "node",
+        "noEmitOnError": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": true,
+        "outDir": "dist",
+        "preserveConstEnums": true,
+        "removeComments": false,
+        "sourceMap": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "target": "esnext"
+    },
+    "exclude": [
+        "node_modules",
+        "test"
+    ],
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx"
+    ]
+}

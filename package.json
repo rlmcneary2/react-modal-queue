@@ -1,0 +1,46 @@
+{
+  "name": "react-modal-provider",
+  "version": "0.0.1",
+  "description": "Create a 'modal' view in a React application.",
+  "main": "dist/react-modal-provider.js",
+  "scripts": {
+    "build": "npm run clean && webpack --env.NODE_ENV=production",
+    "clean": "rimraf ./dist/*.ts ./dist/*.js ./dist/*.map",
+    "debug": "npm run clean && webpack && npm link"
+  },
+  "keywords": [
+    "react",
+    "modal",
+    "dialog",
+    "provider"
+  ],
+  "author": "Richard L. McNeary II",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/polyfill": "^7.2.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "@types/node": "^11.9.4",
+    "@types/react": "^16.8.7",
+    "babel-loader": "^8.0.5",
+    "prop-types": "^15.7.2",
+    "rimraf": "^2.6.3",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^5.3.3",
+    "tslint": "^5.12.1",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.3.3",
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3"
+  },
+  "peerDependencies": {
+    "react": "^16.8.3"
+  },
+  "types": "dist/index.d.ts"
+}
