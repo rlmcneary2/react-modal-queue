@@ -21,8 +21,14 @@
  */
 
 
-import { DismissModalElement, ModalBodyProps, ModalProps, ModalTitleProps } from "./interfaces";
-import { raiseModalElement } from "./modal-element";
-import { ModalProvider } from "./modal-provider";
+import React from "react";
+import { ModalTitleProps } from "./interfaces";
 
-export { DismissModalElement, ModalBodyProps, ModalProvider, ModalProps, ModalTitleProps, raiseModalElement };
+
+/**
+ * Defines the title component of a modal element.
+ */
+export default (props: ModalTitleProps): JSX.Element => {
+    const { content } = props;
+    return (<div className="modal-element-title">{typeof content === "string" ? (<h1>{content}</h1>) : content}</div>);
+};

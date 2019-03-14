@@ -21,8 +21,18 @@
  */
 
 
-import { DismissModalElement, ModalBodyProps, ModalProps, ModalTitleProps } from "./interfaces";
-import { raiseModalElement } from "./modal-element";
-import { ModalProvider } from "./modal-provider";
+import React from "react";
+import { ModalBodyProps } from "./interfaces";
 
-export { DismissModalElement, ModalBodyProps, ModalProvider, ModalProps, ModalTitleProps, raiseModalElement };
+
+/**
+ * Defines the main component of a modal element.
+ */
+export default (props: ModalBodyProps): JSX.Element => {
+    const { content } = props;
+    return (<div className="modal-element-body">{Array.isArray(content) ? (content as any[]).map(mapContent) : mapContent(content)}</div>);
+};
+
+function mapContent(item: string | JSX.Element): JSX.Element {
+    return typeof item === "string" ? (<p>{item}</p>) : item;
+}

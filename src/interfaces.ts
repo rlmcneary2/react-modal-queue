@@ -27,13 +27,11 @@
 type DismissModalElement = () => void;
 
 /**
- * Props passed to a modal provider.
+ * Data used to display the main content of a modal element.
  */
-interface ModalProviderProps {
-    /** These are passed as elements between opening and closing <ModalProvider> tags. */
-    children?: JSX.Element | JSX.Element[];
-    /** A unique identifier for this modal provider. */
-    uid?: string;
+interface ModalBodyProps {
+    /** The main content can be one or more strings, or one or more custom elements. Strings will be placed inside <p> elements. */
+    content: string | string[] | JSX.Element | JSX.Element[];
 }
 
 /**
@@ -47,15 +45,43 @@ interface ModalElementProps {
  * Props that control the display of a modal.
  */
 interface ModalProps {
+    /** The information to display in the modal element. */
+    body: ModalBodyProps;
+
+    /** The unique identifier of the provider. */
     providerUid?: string;
+
+    // A title to display at the top of the modal element.
+    title?: ModalTitleProps;
+
     /** A unique identifier for this modal. */
     uid: string;
+}
+
+/**
+ * Props passed to a modal provider.
+ */
+interface ModalProviderProps {
+    /** These are passed as elements between opening and closing <ModalProvider> tags. */
+    children?: JSX.Element | JSX.Element[];
+    /** A unique identifier for this modal provider. */
+    uid?: string;
+}
+
+/**
+ * Data used to display the title of a modal element.
+ */
+interface ModalTitleProps {
+    /** The information to display in the title. A string will be displayed as the content of an <h1> element. */
+    content: string | JSX.Element | JSX.Element[];
 }
 
 
 export {
     DismissModalElement,
+    ModalBodyProps,
     ModalElementProps,
     ModalProps,
-    ModalProviderProps
+    ModalProviderProps,
+    ModalTitleProps
 };

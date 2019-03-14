@@ -21,8 +21,10 @@
  */
 
 
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DismissModalElement, ModalElementProps, ModalProps } from "./interfaces";
+import ModalBody from "./modal-body";
+import ModalTitle from "./modal-title";
 
 
 /** These are modals queued for display, shared by all ModalProvider instances. */
@@ -93,21 +95,40 @@ export default (props: ModalElementProps): JSX.Element => {
     });
 
 
-    if (!currentModalUid) {
-        return (<span dangerouslySetInnerHTML={{__html: "<!-- no modal element -->"}} />);
+    let content: JSX.Element = null;
+    if (currentModalUid) {
+        const currentModalItem = findModalItem(providerUid, currentModalUid);
+        if (currentModalItem) {
+            const { props: modalProps } = currentModalItem;
+            const { body: bodyProps, title: titleProps} = modalProps;
+
+            const title = titleProps ? (<ModalTitle {...titleProps} />) : null;
+
+            content = (
+                <>
+                    {title}
+                    <ModalBody {...bodyProps} />
+                </>
+            );
+        }
     }
 
 
     return (
-        <div className="modal-element">
-            <span>current UID: '{currentModalUid}'</span>
+        <div className="modal-element-overlay">
+            <div className="modal-element-container">
+                <div className="modal-element">
+                    <span aria-hidden="true" dangerouslySetInnerHTML={{__html: `<!-- providerUid: '${providerUid}', modalUid: '${currentModalUid}' -->`}} style={{ visibility: "collapse" }} />
+                    {content}
+                </div>
+            </div>
         </div>
     );
 };
 
 
-function findAndClaimNextModalItem(providerUid: string): ModalItem {
-    const modalItem = findModalItem(providerUid);
+function findAndClaimNextModalItem(providerUid: string, modalUid: string = null): ModalItem {
+    const modalItem = findModalItem(providerUid, modalUid);
     if (!modalItem) {
         return;
     }
@@ -117,8 +138,11 @@ function findAndClaimNextModalItem(providerUid: string): ModalItem {
     return modalItem;
 }
 
-function findModalItem(providerUid: string): ModalItem {
-    const index = modals.findIndex(x => (x.claimedUid === providerUid) || (x.providerUid === providerUid) || (!x.claimedUid && !x.providerUid));
+function findModalItem(providerUid: string, modalUid: string = null): ModalItem {
+    const index: number = modalUid ?
+        modals.findIndex(x => x.modalUid === modalUid && x.providerUid === providerUid) :
+        modals.findIndex(x => (x.claimedUid === providerUid) || (x.providerUid === providerUid) || (!x.claimedUid && !x.providerUid));
+
     if (index < 0) {
         return;
     }
@@ -146,6 +170,7 @@ function raiseModalElement(props: ModalProps): DismissModalElement {
     const modalItem: Partial<ModalItem> = {
         claimedUid: null,
         modalUid,
+        props,
         providerUid
     };
 
@@ -172,6 +197,7 @@ function raiseModalElement(props: ModalProps): DismissModalElement {
     return dismissModalElement;
 }
 
+
 export { raiseModalElement };
 
 
@@ -186,6 +212,7 @@ interface OnModalChange {
 interface ModalItem {
     claimedUid: string;
     dismissModalElement: DismissModalElement;
+    props: ModalProps;
     providerUid?: string;
     modalUid: string;
 }
