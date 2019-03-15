@@ -21,48 +21,113 @@
  */
 
 
+import PropTypes from "prop-types";
 import React from "react";
-import { ModalFooterProps } from "./interfaces";
+import { DismissModal, ModalButtonProps, ModalFooterButtonHandlerProps, ModalFooterButtonProps, ModalFooterPropsInternal } from "./interfaces";
+import ModalButton from "./modal-button";
 import { createClassName } from "./util";
 
 
 /**
  * Defines the title component of a modal element.
  */
-export default (props: ModalFooterProps): JSX.Element => {
-    const { buttons, content, onNegativeClick, onAffirmativeClick } = props;
+// tslint:disable-next-line:variable-name
+const ModalFooter = (props: ModalFooterPropsInternal): JSX.Element => {
+    const { content, dismiss } = props;
 
-    let footerContent: JSX.Element | JSX.Element[];
-    if (content) {
-        // If custom content provided show that.
-        footerContent = content;
-    } else if (buttons) {
-        // They could also just supply an array of button objects.
-        footerContent = buttons.map((x, i) => {
-            const { content: children, onClick: clickHandler } = x;
-            const buttonProps = {
-                children,
-                onClick: () => clickHandler(x)
-            };
+    let footer = modalFooterHandlerProps(content);
 
-            return (<button key={"" + i} {...buttonProps} />);
-        });
-    } else if (onNegativeClick || onAffirmativeClick) {
-        // Lastly just simple callbacks for common types of buttons.
-        footerContent = [];
-        if (onAffirmativeClick) {
-            footerContent.push((<button className={`${createButtonClassName()} affirmative`} key="affirmative" onClick={onAffirmativeClick} />));
-        }
-
-        if (onNegativeClick) {
-            footerContent.push((<button className={`${createButtonClassName()} negative`} key="negative" onClick={onNegativeClick} />));
-        }
+    if (!footer) {
+        footer = modalFooterButtonProps(content, dismiss);
     }
 
-    return (<div className={createClassName("footer")}>{footerContent}</div>);
+    if (!footer) {
+        footer = content as JSX.Element;
+    }
+
+    return (<div className={createClassName("footer")}>{footer}</div>);
 };
+
+ModalFooter.propTypes = {
+    content: PropTypes.oneOfType([
+        PropTypes.shape({
+            onAffirmativeClick: PropTypes.func.isRequired,
+            onNegativeClick: PropTypes.func,
+            primary: PropTypes.oneOf(["affirmative", "negative"])
+        }),
+        PropTypes.arrayOf(
+            PropTypes.shape({
+                className: PropTypes.string,
+                content: PropTypes.oneOfType([
+                    PropTypes.string,
+                    PropTypes.element
+                ]).isRequired,
+                focus: PropTypes.bool,
+                onClick: PropTypes.func
+            })
+        ),
+        PropTypes.element
+    ]).isRequired,
+    dismiss: PropTypes.func.isRequired
+};
+
+
+export default ModalFooter;
 
 
 function createButtonClassName(): string {
     return `${createClassName("button")}`;
+}
+
+function isButtonProps(props: any): props is ModalFooterButtonProps[] {
+    return Array.isArray(props) && (props.length ? props[0].hasOwnProperty("content") : false);
+}
+
+function isHandlerProps(props: any): props is ModalFooterButtonHandlerProps {
+    return props.hasOwnProperty("onAffirmativeClick");
+}
+
+function modalFooterButtonProps(props: any, dismiss: DismissModal): JSX.Element | void {
+    if (!isButtonProps(props)) {
+        return;
+    }
+
+    const buttons = props.map((x, i) => {
+        const { className, content: children, focus, onClick } = x;
+
+        const bProps: ModalButtonProps = {
+            children,
+            className: `${createButtonClassName()}${className ? " " + className : ""}`,
+            modalFocus: focus ? true : false,
+            onClick: () => onClick ? onClick(x) : dismiss() // If no click handler is provided the dialog will be dismissed when the button is clicked.
+        };
+
+        return (
+            <ModalButton key={`${i}`} {...bProps} />
+        );
+    });
+
+    return (<>{buttons}</>);
+}
+
+function modalFooterHandlerProps(props: any): JSX.Element | void {
+    if (!isHandlerProps(props)) {
+        return;
+    }
+
+    const affirmative = (
+        <button
+            className={`${createButtonClassName()} affirmative${props.primary === "affirmative" ? " primary" : ""}`}
+            onClick={props.onAffirmativeClick}
+        />
+    );
+
+    const negative = props.onNegativeClick ? (
+        <button
+            className={`${createButtonClassName()} negative${props.primary === "negative" ? " primary" : ""}`}
+            onClick={props.onAffirmativeClick}
+        />
+    ) : null;
+
+    return (<>{affirmative}{negative}</>);
 }

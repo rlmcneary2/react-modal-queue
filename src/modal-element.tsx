@@ -22,7 +22,7 @@
 
 
 import React, { useEffect, useRef, useState } from "react";
-import { DismissModalElement, ModalElementProps, ModalProps } from "./interfaces";
+import { DismissModal, ModalElementProps, ModalOptions, ModalFooterPropsInternal } from "./interfaces";
 import ModalBody from "./modal-body";
 import ModalFooter from "./modal-footer";
 import ModalTitle from "./modal-title";
@@ -110,7 +110,7 @@ export default (props: ModalElementProps): JSX.Element => {
         }
 
         const currentModalItem = findModalItem(providerUid, currentModalUid);
-        if (currentModalItem && currentModalItem.props.dismissable) {
+        if (currentModalItem && currentModalItem.options.dismissable) {
             // Let the stack for the click event unwind before dismissing the
             // modal element.
             setTimeout(() => currentModalItem.dismissModalElement());
@@ -130,10 +130,12 @@ export default (props: ModalElementProps): JSX.Element => {
         if (currentModalItem) {
             visible = " visible";
 
-            const { props: modalProps } = currentModalItem;
-            const { body: bodyProps, footer: footerProps, title: titleProps} = modalProps;
+            const { options: modalOptions } = currentModalItem;
+            const { body: bodyProps, footer: footerProps, title: titleProps} = modalOptions;
 
-            const footer = footerProps ? (<ModalFooter {...footerProps} />) : null;
+            (footerProps as ModalFooterPropsInternal).dismiss = currentModalItem.dismissModalElement;
+
+            const footer = footerProps ? (<ModalFooter {...(footerProps as ModalFooterPropsInternal)} />) : null;
             const title = titleProps ? (<ModalTitle {...titleProps} />) : null;
 
             content = (
@@ -189,11 +191,11 @@ function findModalItem(providerUid: string, modalUid: string = null): ModalItem 
 
 /**
  * Cause a modal element to be displayed.
- * @param props The props for the modal element.
+ * @param options The options for the modal element.
  * @returns A function to dismiss the modal element.
  */
-function raiseModalElement(props: ModalProps): DismissModalElement {
-    const { providerUid, uid: modalUid } = props;
+function raiseModalElement(options: ModalOptions): DismissModal {
+    const { providerUid, uid: modalUid } = options;
 
     if (!modalUid) {
         throw Error(`A modal must include a valid uid string property.`);
@@ -207,13 +209,13 @@ function raiseModalElement(props: ModalProps): DismissModalElement {
     const modalItem: Partial<ModalItem> = {
         claimedUid: null,
         modalUid,
-        props,
+        options,
         providerUid
     };
 
 
     // This function is returned to the caller to dismiss the modal.
-    const dismissModalElement: DismissModalElement = () => {
+    const dismissModalElement: DismissModal = () => {
         const index = modals.findIndex(x => x === modalItem);
         if (index < 0) {
             return;
@@ -248,8 +250,8 @@ interface OnModalChange {
 
 interface ModalItem {
     claimedUid: string;
-    dismissModalElement: DismissModalElement;
-    props: ModalProps;
+    dismissModalElement: DismissModal;
+    options: ModalOptions;
     providerUid?: string;
     modalUid: string;
 }

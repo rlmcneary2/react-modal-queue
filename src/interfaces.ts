@@ -21,42 +21,73 @@
  */
 
 
+import React from "react";
+
+
 /** 
  * A function that dismisses its modal element.
  */
-type DismissModalElement = () => void;
+type DismissModal = () => void;
 
 /**
- * Data used to display the main content of a modal element.
+ * Information displayed in the content of a modal element.
  */
 interface ModalBodyProps {
     /** The main content can be one or more strings, or one or more custom elements. Strings will be placed inside <p> elements. */
-    content: string | string[] | JSX.Element | JSX.Element[];
+    content: string | string[] | JSX.Element;
+}
+
+// interface ModalButtonProps extends React.DOMAttributes<any> {
+//     className?: string;
+//     focus?: boolean;
+// }
+interface ModalButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+    modalFocus?: boolean;
 }
 
 /**
- * The internal interface for props passed to the internal ModalElement.
+ * Props to configure the footer of the modal.
  */
-interface ModalElementProps {
-    providerUid: string;
-}
-
 interface ModalFooterProps {
-    buttons?: ModalFooterButtonProps[];
-    content?: JSX.Element | JSX.Element[];
-    onNegativeClick?: () => void;
-    onAffirmativeClick?: () => void;
+    /** Define the display of the footer. */
+    content: ModalFooterButtonHandlerProps | ModalFooterButtonProps[] | JSX.Element;
 }
 
+/**
+ * Allows simple and semi-custom buttons to be created in the footer.
+ */
 interface ModalFooterButtonProps {
-    content: string | JSX.Element | JSX.Element[];
-    onClick: (props: ModalFooterButtonProps) => void;
+    /** Optional class name that will be set on the button. */
+    className?: string;
+
+    /** The information that will be displayed as the contents of a button element. */
+    content: string | JSX.Element;
+
+    /** If true the button will be focused. This should be true for only one button in the array. */
+    focus?: boolean;
+
+    /** Optional handler that will be invoked when the button is clicked. */
+    onClick?: (props: ModalFooterButtonProps) => void;
+}
+
+/**
+ * Create a footer with one or two buttons.
+ */
+interface ModalFooterButtonHandlerProps {
+    /** Invoked when the affirmative button is clicked. */
+    onAffirmativeClick: () => void;
+
+    /** Optional handler for a negative response button. If not supplied the seconds button will not appear. */
+    onNegativeClick?: () => void;
+
+    /** Optional toggle to set the class "primary" on one of the two buttons. */
+    primary?: "affirmative" | "negative";
 }
 
 /**
  * Props that control the display of a modal.
  */
-interface ModalProps {
+interface ModalOptions {
     /** The information to display in the modal element. */
     body: ModalBodyProps;
 
@@ -91,17 +122,37 @@ interface ModalProviderProps {
  */
 interface ModalTitleProps {
     /** The information to display in the title. A string will be displayed as the content of an <h1> element. */
-    content: string | JSX.Element | JSX.Element[];
+    content: string | JSX.Element;
+}
+
+
+/**
+ * Props passed to the internal ModalElement.
+ * @protected
+ */
+interface ModalElementProps {
+    providerUid: string;
+}
+
+/**
+ * Internal props passed to the footer.
+ * @protected
+ */
+interface ModalFooterPropsInternal extends ModalFooterProps {
+    dismiss: DismissModal;
 }
 
 
 export {
-    DismissModalElement,
+    DismissModal,
     ModalBodyProps,
+    ModalButtonProps,
     ModalElementProps,
+    ModalFooterButtonHandlerProps,
     ModalFooterButtonProps,
     ModalFooterProps,
-    ModalProps,
+    ModalFooterPropsInternal,
+    ModalOptions,
     ModalProviderProps,
     ModalTitleProps
 };

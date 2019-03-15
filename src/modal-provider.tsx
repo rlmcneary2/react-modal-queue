@@ -21,6 +21,7 @@
  */
 
 
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { ModalProviderProps } from "./interfaces";
 import ModalElement from "./modal-element";
@@ -40,6 +41,10 @@ const ModalProvider = (props: ModalProviderProps): JSX.Element => {
             <ModalElement providerUid={currentUid} />
         </>
     );
+};
+
+ModalProvider.propTypes = {
+    uid: PropTypes.string
 };
 
 

@@ -21,26 +21,31 @@
  */
 
 
-import {
-    DismissModal,
-    ModalBodyProps,
-    ModalFooterButtonHandlerProps,
-    ModalFooterButtonProps,
-    ModalFooterProps,
-    ModalOptions,
-    ModalTitleProps
-} from "./interfaces";
-import { raiseModalElement } from "./modal-element";
-import { ModalProvider } from "./modal-provider";
+import React, { useEffect, useRef, useState } from "react";
+import { ModalButtonProps } from "./interfaces";
 
-export {
-    DismissModal,
-    ModalBodyProps,
-    ModalFooterButtonHandlerProps,
-    ModalFooterButtonProps,
-    ModalFooterProps,
-    ModalProvider,
-    ModalOptions,
-    ModalTitleProps,
-    raiseModalElement
+
+/**
+ * Internal only pass-through button so that focus can be claimed by a button.
+ */
+// tslint:disable-next-line:variable-name
+const ModalButton = (props: ModalButtonProps): JSX.Element => {
+    const { modalFocus, ...bProps } = props;
+
+    // tslint:disable-next-line:prefer-const
+    let ref = useRef(null);
+
+    const [focused, setFocus] = useState(false);
+
+    useEffect(() => {
+        if (modalFocus && !focused) {
+            ref.current.focus();
+            setFocus(true);
+        }
+    });
+
+    return (<button ref={ref} {...bProps} />);
 };
+
+
+export default ModalButton;

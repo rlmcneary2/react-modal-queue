@@ -21,6 +21,7 @@
  */
 
 
+import PropTypes from "prop-types";
 import React from "react";
 import { ModalBodyProps } from "./interfaces";
 import { createClassName } from "./util";
@@ -29,10 +30,23 @@ import { createClassName } from "./util";
 /**
  * Defines the main component of a modal element.
  */
-export default (props: ModalBodyProps): JSX.Element => {
+// tslint:disable-next-line:variable-name
+const ModalBody = (props: ModalBodyProps): JSX.Element => {
     const { content } = props;
     return (<div className={createClassName("body")}>{Array.isArray(content) ? (content as any[]).map(mapContent) : mapContent(content)}</div>);
 };
+
+ModalBody.propTypes = {
+    content: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.element
+    ]).isRequired
+};
+
+
+export default ModalBody;
+
 
 function mapContent(item: string | JSX.Element, index?: number): JSX.Element {
     return typeof item === "string" ? createPara(item, typeof index === "number" ? "" + index : null) : item;

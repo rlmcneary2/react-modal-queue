@@ -21,6 +21,7 @@
  */
 
 
+import PropTypes from "prop-types";
 import React from "react";
 import { ModalTitleProps } from "./interfaces";
 import { createClassName } from "./util";
@@ -29,7 +30,18 @@ import { createClassName } from "./util";
 /**
  * Defines the title component of a modal element.
  */
-export default (props: ModalTitleProps): JSX.Element => {
+// tslint:disable-next-line:variable-name
+const ModalTitle = (props: ModalTitleProps): JSX.Element => {
     const { content } = props;
     return (<div className={createClassName("title")}>{typeof content === "string" ? (<h1>{content}</h1>) : content}</div>);
 };
+
+ModalTitle.propTypes = {
+    content: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element
+    ]).isRequired
+};
+
+
+export default ModalTitle;
