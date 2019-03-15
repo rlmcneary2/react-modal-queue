@@ -21,10 +21,12 @@
  */
 
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DismissModalElement, ModalElementProps, ModalProps } from "./interfaces";
 import ModalBody from "./modal-body";
+import ModalFooter from "./modal-footer";
 import ModalTitle from "./modal-title";
+import { classNameRoot, createClassName } from "./util";
 
 
 /** These are modals queued for display, shared by all ModalProvider instances. */
@@ -70,15 +72,15 @@ export default (props: ModalElementProps): JSX.Element => {
                 return;
             }
 
-            if (modals.length) {
-                const modal = findAndClaimNextModalItem(providerUid);
-                if (modal) {
-                    setModalElementUid(modal.modalUid);
-                    return;
-                }
+            // If there are more modals to display get the next one and
+            // immediately display it.
+            let nextModalUid: string = null;
+            const modal = findAndClaimNextModalItem(providerUid);
+            if (modal) {
+                nextModalUid = modal.modalUid;
             }
 
-            setModalElementUid(null);
+            setModalElementUid(nextModalUid);
         };
 
         // Add our queue change listeners.
@@ -95,19 +97,50 @@ export default (props: ModalElementProps): JSX.Element => {
     });
 
 
+    // If the user clicks outside of the modal element it will be dismissed when
+    // ModalProp.dismissable is true.
+    //
+    // I'm not really crazy about how this works. Review later to see if there
+    // is a better alternative.
+    const ref = useRef(null);
+
+    const documentClick = (evt: MouseEvent) => {
+        if (!currentModalUid || !ref.current || ref.current.contains(evt.target)) {
+            return;
+        }
+
+        const currentModalItem = findModalItem(providerUid, currentModalUid);
+        if (currentModalItem && currentModalItem.props.dismissable) {
+            // Let the stack for the click event unwind before dismissing the
+            // modal element.
+            setTimeout(() => currentModalItem.dismissModalElement());
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("click", documentClick, true);
+        return () => { document.removeEventListener("click", documentClick, true); };
+    });
+
+
     let content: JSX.Element = null;
+    let visible = "";
     if (currentModalUid) {
         const currentModalItem = findModalItem(providerUid, currentModalUid);
         if (currentModalItem) {
-            const { props: modalProps } = currentModalItem;
-            const { body: bodyProps, title: titleProps} = modalProps;
+            visible = " visible";
 
+            const { props: modalProps } = currentModalItem;
+            const { body: bodyProps, footer: footerProps, title: titleProps} = modalProps;
+
+            const footer = footerProps ? (<ModalFooter {...footerProps} />) : null;
             const title = titleProps ? (<ModalTitle {...titleProps} />) : null;
 
             content = (
                 <>
                     {title}
                     <ModalBody {...bodyProps} />
+                    {footer}
                 </>
             );
         }
@@ -115,9 +148,9 @@ export default (props: ModalElementProps): JSX.Element => {
 
 
     return (
-        <div className="modal-element-overlay">
-            <div className="modal-element-container">
-                <div className="modal-element">
+        <div className={createClassName("overlay") + visible}>
+            <div className={createClassName("container") + visible}>
+                <div className={classNameRoot + visible} ref={ref}>
                     <span aria-hidden="true" dangerouslySetInnerHTML={{__html: `<!-- providerUid: '${providerUid}', modalUid: '${currentModalUid}' -->`}} style={{ visibility: "collapse" }} />
                     {content}
                 </div>
@@ -139,8 +172,12 @@ function findAndClaimNextModalItem(providerUid: string, modalUid: string = null)
 }
 
 function findModalItem(providerUid: string, modalUid: string = null): ModalItem {
+    if (!modals.length) {
+        return;
+    }
+
     const index: number = modalUid ?
-        modals.findIndex(x => x.modalUid === modalUid && x.providerUid === providerUid) :
+        modals.findIndex(x => x.modalUid === modalUid && (x.claimedUid === providerUid || x.providerUid === providerUid)) :
         modals.findIndex(x => (x.claimedUid === providerUid) || (x.providerUid === providerUid) || (!x.claimedUid && !x.providerUid));
 
     if (index < 0) {

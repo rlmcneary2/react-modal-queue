@@ -21,23 +21,14 @@
  */
 
 
-import React from "react";
-import { ModalBodyProps } from "./interfaces";
-import { createClassName } from "./util";
+const classNameRoot = "modal-element";
 
-
-/**
- * Defines the main component of a modal element.
- */
-export default (props: ModalBodyProps): JSX.Element => {
-    const { content } = props;
-    return (<div className={createClassName("body")}>{Array.isArray(content) ? (content as any[]).map(mapContent) : mapContent(content)}</div>);
+const createClassName = (suffix: string): string => {
+    return `${classNameRoot}-${suffix}`;
 };
 
-function mapContent(item: string | JSX.Element, index?: number): JSX.Element {
-    return typeof item === "string" ? createPara(item, typeof index === "number" ? "" + index : null) : item;
-}
 
-function createPara(text: string, key?: string) {
-    return key ? (<p key={key}>{text}</p>) : (<p>{text}</p>);
-}
+export {
+    classNameRoot,
+    createClassName
+};

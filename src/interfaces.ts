@@ -41,12 +41,30 @@ interface ModalElementProps {
     providerUid: string;
 }
 
+interface ModalFooterProps {
+    buttons?: ModalFooterButtonProps[];
+    content?: JSX.Element | JSX.Element[];
+    onNegativeClick?: () => void;
+    onAffirmativeClick?: () => void;
+}
+
+interface ModalFooterButtonProps {
+    content: string | JSX.Element | JSX.Element[];
+    onClick: (props: ModalFooterButtonProps) => void;
+}
+
 /**
  * Props that control the display of a modal.
  */
 interface ModalProps {
     /** The information to display in the modal element. */
     body: ModalBodyProps;
+
+    /** If true the modal can be dismissed by clicking outside of the modal element. */
+    dismissable?: boolean;
+
+    /** Information displayed at the bottom of the modal element. */
+    footer?: ModalFooterProps;
 
     /** The unique identifier of the provider. */
     providerUid?: string;
@@ -81,6 +99,8 @@ export {
     DismissModalElement,
     ModalBodyProps,
     ModalElementProps,
+    ModalFooterButtonProps,
+    ModalFooterProps,
     ModalProps,
     ModalProviderProps,
     ModalTitleProps

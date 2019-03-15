@@ -23,6 +23,7 @@
 
 import React from "react";
 import { ModalTitleProps } from "./interfaces";
+import { createClassName } from "./util";
 
 
 /**
@@ -30,5 +31,5 @@ import { ModalTitleProps } from "./interfaces";
  */
 export default (props: ModalTitleProps): JSX.Element => {
     const { content } = props;
-    return (<div className="modal-element-title">{typeof content === "string" ? (<h1>{content}</h1>) : content}</div>);
+    return (<div className={createClassName("title")}>{typeof content === "string" ? (<h1>{content}</h1>) : content}</div>);
 };

@@ -21,8 +21,17 @@
  */
 
 
-import { DismissModalElement, ModalBodyProps, ModalProps, ModalTitleProps } from "./interfaces";
+import { DismissModalElement, ModalBodyProps, ModalFooterButtonProps, ModalFooterProps, ModalProps, ModalTitleProps } from "./interfaces";
 import { raiseModalElement } from "./modal-element";
 import { ModalProvider } from "./modal-provider";
 
-export { DismissModalElement, ModalBodyProps, ModalProvider, ModalProps, ModalTitleProps, raiseModalElement };
+export {
+    DismissModalElement,
+    ModalBodyProps,
+    ModalFooterButtonProps,
+    ModalFooterProps,
+    ModalProvider,
+    ModalProps,
+    ModalTitleProps,
+    raiseModalElement
+};
