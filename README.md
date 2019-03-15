@@ -1,6 +1,6 @@
 # react-modal-provider
 
-Display modal dialogs and elements in a React application. This package is different from other React modal packages because it does **not** require a component in every location that a modal element needs to appear, instead a single ModalProvider is used to display modals. This is helpful when a modal element needs to be displayed but the modal may not be related to the current view in the UI; for example a long-running background process encounters a problem and needs to display an error. The react-modal-provider package allows dialogs to be displayed from anywhere within the application.
+Raise modal dialogs and views from any JavaScript code in a React application. This package is different from other React modal packages because it does **not** require a component in every location that a modal element needs to appear, instead a single ModalProvider is used to display modals. This is especially helpful when a modal element needs to be displayed but the modal may not be related to the current view in the UI; for example a long-running background process encounters a problem and needs to display an error. The react-modal-provider package allows dialogs to be displayed from anywhere within the application.
 
 ## Install
 ```
@@ -22,25 +22,27 @@ export default = props => {
 };
 ```
 
-When you need to display a modal element use `raiseModalElement()`. This function takes a single argument: an instance of ModalProps with information about the modal, and returns a function that can be used to dismiss the modal when it is no longer needed.
+When you need to display a modal element use `raiseModalElement()`. This function takes a single argument: an instance of ModalOptions with information about the modal, and returns a function that can be used to dismiss the modal when it is no longer needed.
 
 ```javascript
 import { raiseModalElement } from "react-modal-provider";
 
 export default = props => {
-    // Here the modal is raised when the user clicks a button.
+    // This function will be passed to a button's onClick prop.
     const raiseModal = () => {
+        // The raiseModalElement function returns a function to dismiss the modal.
         const dismissModal = raiseModalElement({
-            body: (<input placeholder="Your name..." type="text" />),
+            body: (<input placeholder="Your name..." type="text" />), // The main message in the modal.
             footer: {
-                onAffirmativeClick: () => submit(dismissModal),
-                onNegativeClick: () => close(dismissModal)
+                onAffirmativeClick: () => submit(dismissModal),       // Displays a string like "OK".
+                onNegativeClick: () => close(dismissModal)            // Displays a string like "Cancel".
             },
-            title: "Enter your information",
-            uid: "MODAL_ENTER_INFORMATION"
+            title: "Enter your information",                          // Appears at the top of the modal.
+            uid: "MODAL_ENTER_INFORMATION"                            // Uniquely identifies this modal.
         });
     };
     
+    // The modal is raised when the user clicks the button.
     return (
         <button onClick={raiseModal}>Enter Information</button>
     );
@@ -99,6 +101,52 @@ The modal is composed of several elements "modal-element-overlay", "modal-elemen
     width: 100%;
 }
 ```
+
+### Title
+The title of the modal can be a string that will be placed into an &lt;h1&gt; element or a React Component if the title needs to be customized.
+
+### Body
+A modal's body can be created simply by providing a single string or an array of strings. Each string will be surrounded by a &lt;p&gt; element. If more customziation is needed a React Component can be provided for the body.
+
+### Footer
+A set of buttons will be displayed in the modal's footer. There are three different options for defining the buttons: one or two buttons can be created by passing handlers, a set of button definitions can be provided in an array, or a React Component can be provided as the footer content.
+
+An example using handlers.
+```javascript
+const footer = {
+    onAffirmativeClick: () => dismissModal(), // This handler is required and a single button will display.
+    onNegativeClick: () => dismissModal(),    // Optional. Two buttons will be displayed.
+    primary: "affirmative"                    // Optional. If specified the class "primary" will be added to the button.
+};
+```
+```css
+.modal-element-button.affirmative:before {
+    content: "OK";
+}
+
+.modal-element-button.negative:before {
+    content: "Cancel";
+}
+
+.modal-element-button.primary {
+    background-color: red;
+}
+```
+
+Supplying button definitions as part of an array. There is more flexibility here since the content of the button can be set, a custom class can be set on the button, a button can be focused, and there are no limits on the number of buttons. Here three buttons are created.
+```javascript
+const footer = [{                        // Button #1
+    className: "primary",                // Optional. Will be set on the button.
+    content: "Yes",                      // The information to display in the button. A string or React Component are both valid.
+    focus: true,                         // Optional. If true the button will be focused.
+    onClick: () => submit(dismissModal), // Optional. Invoked when the button is clicked. If not provided clicking the button will dismiss the dialog.
+}, {                                     // Button #2
+    content: "No",                       // The information to display in the button. A string or React Component are both valid.
+}, {                                     // Button #3
+    content: "Maybe",                    // The information to display in the button. A string or React Component are both valid.
+}];
+```
+
 
 ## API
 TODO
