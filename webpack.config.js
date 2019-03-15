@@ -43,6 +43,12 @@ const config = {
         index: `./${_SOURCE_DIR}/index.ts`
     },
     externals: [{
+        "prop-types": {
+            commonjs: "prop-types",
+            commonjs2: "prop-types",
+            amd: "prop-types",
+            root: "PropTypes"
+        },
         react: {
             commonjs: "react",
             commonjs2: "react",
