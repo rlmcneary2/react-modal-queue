@@ -106,7 +106,7 @@ The modal is composed of several elements in the DOM: "modal-element-overlay", "
 The title of the modal can be a string that will be placed into an &lt;h1&gt; element or a React Component if the title needs to be customized.
 
 ### Body
-A modal's body can be created simply by providing a single string or an array of strings. Each string will be surrounded by a &lt;p&gt; element. If more customziation is needed a React Component can be provided for the body.
+A modal's body can be created simply by providing a single string or an array of strings. Each string will be surrounded by a &lt;p&gt; element. If more customization is needed a React Component can be provided for the body.
 
 ### Footer
 A set of buttons will be displayed in the modal's footer. There are three different options for defining the buttons: one or two buttons can be created by passing handlers, a set of button definitions can be provided in an array, or a React Component can be provided as the footer content.
@@ -146,14 +146,78 @@ const footer = [{                        // Button #1
     content: "Maybe",                    // The information to display in the button. A string or React Component are both valid.
 }];
 ```
+## Notes
+Modal requests are queueud and processed in the order they are received.
 
+Showing and hiding the modal can be animated using the [react-transition-group](http://reactcommunity.org/react-transition-group/) package. The transition classes will be set on the modal-element-overlay element.
+
+If [ModalOptions](ModalOptions).dismissable is set to true then the modal will be dismissed if the user clicks anywhere outside the modal.
 
 ## API
-TODO
 
-## Notes
-Modal requests are queueud and processed in the order they are recieved.
+### \<ModalProvider\>
+The ModalProvider allows an application to display modals. This component is placed at the root of an application and is reponsible for controlling modals.
+#### Props: ModalProviderProps
+**uid**: string<br />_Optional_ a unique identifier for this modal provider that can be used to direct a modal request to a specific provider instance.
 
-If the `ModalProp.dismissable` property is set to true then the modal will be dismissed if the user clicks anywhere outside the modal element.
+**children**: Element | Element[]<br />_Optional_ components between ModalProvider opening and closing tags.
 
-It should be possible to animate the display of the dialog using the React transition package. TBD.
+### dismissModal
+A function returned from [raiseModalElement](raiseModalElement). When invoked it dismisses the raised modal. Takes no parameters and returns void.
+
+### raiseModalElement
+Invoke this function to display a modal.
+#### Parameters
+**options**: [ModalOptions](ModalOptions)<br />The options for the modal.
+#### Returns
+[DismissModal](dismissModal) A function to dismiss the modal that was raised.
+
+### ModalBodyProps
+Information displayed in the main content of a modal.
+### Properties
+**content**: string | string[] | JSX.Element<br />The main content can be one or more strings, or a component. Strings will be placed inside \<p\> elements.
+
+### ModalFooterProps
+Props to configure the bottom portion of the modal.
+### Properties
+**content**: [ModalFooterButtonHandlerProps](ModalFooterButtonHandlerProps) | [ModalFooterButtonProps](ModalFooterButtonProps)[] | JSX.Element
+
+### ModalFooterButtonProps
+Allows simple and semi-custom buttons to be created in the footer.
+### Properties
+**className**: string<br />_Optional_ class name that will be set on the button.
+
+**content**: string | JSX.Element<br />The information that will be displayed as the contents of a button element.
+
+**focus**: boolean<br />_Optional_ if true the button will be focused. This should be true for only one button in the array.
+
+**onClick**: (props: [ModalFooterButtonProps](ModalFooterButtonProps)) => void<br />_Optional_ handler that will be invoked when the button is clicked.
+
+### ModalFooterButtonHandlerProps
+The simplest way to create a footer with one or two buttons, simply add handlers for the corresponding buttons.
+### Properties
+**onAffirmativeClick**: () => void<br />Invoked when the affirmative button is clicked.
+
+**onNegativeClick**: () => void<br />_Optional_ handler for a negative response button. If not supplied the button will not appear.
+
+**primary**: "affirmative" | "negative"<br />_Optional_ toggle to set the class "primary" on one of the two buttons.
+
+### ModalOptions
+Object that controls the display of a modal.
+#### Properties
+**body**: [ModalBodyProps](ModalBodyProps)<br/>The information to display in the main part of the modal.
+
+**dismissable**: boolean<br/>_Optional_ if true the modal can be dismissed by clicking outside of the modal.
+
+**footer**: [ModalFooterProps](ModalFooterProps)<br/>_Optional_ information displayed at the bottom of the modal.
+
+**providerUid**: string<br/>_Optional_ the unique identifier of the provider.
+
+**title**: [ModalTitleProps](ModalTitleProps)<br/>_Optional_ A title to display at the top of the modal.
+
+**uid**: string<br/>A unique identifier for this modal. Only one modal with this unique identifier can be queued at a time.
+
+### ModalTitleProps
+Data used to display the title of a modal.
+#### Properties
+**content**: string | JSX.Element<br />The information to display in the title. A string will be displayed as the content of an \<h1\> element.
