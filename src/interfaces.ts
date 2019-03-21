@@ -30,10 +30,10 @@ import React from "react";
 type DismissModal = () => void;
 
 /**
- * Information displayed in the content of a modal element.
+ * Information displayed in the main content of a modal element.
  */
 interface ModalBodyProps {
-    /** The main content can be one or more strings, or one or more custom elements. Strings will be placed inside <p> elements. */
+    /** The main content can be one or more strings, or a component. Strings will be placed inside <p> elements. */
     content: string | string[] | JSX.Element;
 }
 
@@ -100,7 +100,7 @@ interface ModalOptions {
     /** The unique identifier of the provider. */
     providerUid?: string;
 
-    // A title to display at the top of the modal element.
+    /** A title to display at the top of the modal element. */
     title?: ModalTitleProps;
 
     /** A unique identifier for this modal. */
@@ -131,6 +131,7 @@ interface ModalTitleProps {
  * @protected
  */
 interface ModalElementProps {
+    mutatedClassName?: string;
     providerUid: string;
 }
 

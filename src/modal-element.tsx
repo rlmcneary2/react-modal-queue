@@ -21,8 +21,8 @@
  */
 
 
-import React, { useEffect, useRef, useState } from "react";
-import { DismissModal, ModalElementProps, ModalOptions, ModalFooterPropsInternal } from "./interfaces";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
+import { DismissModal, ModalElementProps, ModalFooterPropsInternal, ModalOptions } from "./interfaces";
 import ModalBody from "./modal-body";
 import ModalFooter from "./modal-footer";
 import ModalTitle from "./modal-title";
@@ -38,8 +38,8 @@ const modalChanges: OnModalChange[] = [];
 /** 
  * The ModalElement is reponsible for displaying a modal.
  */
-export default (props: ModalElementProps): JSX.Element => {
-    const { providerUid } = props;
+export default forwardRef((props: ModalElementProps, forwardedRef): JSX.Element => {
+    const { mutatedClassName, providerUid } = props;
 
 
     // The current modal is tracked in state.
@@ -149,8 +149,11 @@ export default (props: ModalElementProps): JSX.Element => {
     }
 
 
+    const overlayClassName = `${createClassName("overlay")}${visible}${mutatedClassName ? " " + mutatedClassName : ""}`;
+
+
     return (
-        <div className={createClassName("overlay") + visible}>
+        <div className={overlayClassName} ref={forwardedRef as React.Ref<HTMLDivElement>}>
             <div className={createClassName("container") + visible}>
                 <div className={classNameRoot + visible} ref={ref}>
                     <span aria-hidden="true" dangerouslySetInnerHTML={{__html: `<!-- providerUid: '${providerUid}', modalUid: '${currentModalUid}' -->`}} style={{ visibility: "collapse" }} />
@@ -159,7 +162,7 @@ export default (props: ModalElementProps): JSX.Element => {
             </div>
         </div>
     );
-};
+});
 
 
 function findAndClaimNextModalItem(providerUid: string, modalUid: string = null): ModalItem {
