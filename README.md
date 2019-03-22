@@ -70,7 +70,7 @@ if (response.ok) {
 }
 ```
 
-The modal is composed of several elements in the DOM: "modal-element-overlay", "modal-element-container", and "modal-element" which can be used to position and size the modal. The following CSS will style the modal so that it covers the entire positioned container block and prevents the user from taking any other action until the modal is dismissed.
+The modal is composed of several elements in the DOM: `modal-element-overlay`, `modal-element-container`, and `modal-element` which can be used to position and size the modal. The following CSS will style the modal so that it covers the entire positioned container block and prevents the user from taking any other action until the modal is dismissed.
 
 ```css
 .modal-element-overlay {
@@ -198,7 +198,7 @@ Allows simple and semi-custom buttons to be created in the footer.
 |\[**className**\]|string|_Optional_ class name that will be set on the button.
 |**content**|string \| JSX.Element|The information that will be displayed as the contents of a button element.|
 |\[**focus** = false\]|boolean|_Optional_ if true the button will be focused. This should be true for only one button in the array.|
-|\[**onClick**\]|(props: [ModalFooterButtonProps](#modalfooterbuttonprops)) => void|_Optional_ handler that will be invoked when the button is clicked.
+|\[**onClick**\]|(props: [ModalFooterButtonProps](#modalfooterbuttonprops))<code>&nbsp;</code>=><code>&nbsp;</code>void|_Optional_ handler that will be invoked when the button is clicked.
 
 ### ModalFooterButtonHandlerProps
 The simplest way to create a footer with one or two buttons, simply add handlers for the corresponding buttons.
@@ -217,8 +217,8 @@ Object that controls the display of a modal.
 |**body**|[ModalBodyProps](#modalbodyprops)|The information to display in the main part of the modal.|
 |\[**dismissable** = false\]|boolean|_Optional_ if true the modal can be dismissed by clicking outside of the modal.|
 |\[**footer**\]|[ModalFooterProps](#modalfooterprops)|_Optional_ information displayed at the bottom of the modal.|
-|\[**providerUid**\]|string|_Optional_ the unique identifier of the provider.|
-|\[**title**\]|[ModalTitleProps](#modaltitleprops)|_Optional_ A title to display at the top of the modal.|
+|\[**providerUid**\]|string|_Optional_ unique identifier of the provider.|
+|\[**title**\]|[ModalTitleProps](#modaltitleprops)|_Optional_ title to display at the top of the modal.|
 |**uid**|string|A unique identifier for this modal. Only one modal with this unique identifier can be queued at a time.|
 
 ### ModalTitleProps
