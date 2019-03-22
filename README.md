@@ -103,10 +103,10 @@ The modal is composed of several elements in the DOM: `modal-element-overlay`, `
 ```
 
 ### Title
-The title of the modal can be a string that will be placed into an &lt;h1&gt; element or a React Component if the title needs to be customized.
+The title of the modal can be a string that will be placed into an \<h1\> element or a React Component if the title needs to be customized.
 
 ### Body
-A modal's body can be created simply by providing a single string or an array of strings. Each string will be surrounded by a &lt;p&gt; element. If more customization is needed a React Component can be provided for the body.
+A modal's body can be created simply by providing a single string or an array of strings. Each string will be surrounded by a \<p\> element. If more customization is needed a React Component can be provided for the body.
 
 ### Footer
 A set of buttons will be displayed in the modal's footer. There are three different options for defining the buttons: one or two buttons can be created by passing handlers, a set of button definitions can be provided in an array, or a React Component can be provided as the footer content.
@@ -147,9 +147,9 @@ const footer = [{                        // Button #1
 }];
 ```
 ## Notes
-Modal requests are queued and processed in the order they are received.
+Modal requests are queued and processed in the order they are received. Only one modal is displayed at a time.
 
-Showing and hiding the modal can be animated using the [react-transition-group](http://reactcommunity.org/react-transition-group/) package. The transition classes will be set on the `modal-element-overlay` element.
+Showing and hiding the modal can be animated using the [react-transition-group](http://reactcommunity.org/react-transition-group/) package. Wrap the <ModalProvider> component in a transition component and the transition classes will be set on the `modal-element-overlay` element.
 
 If [ModalOptions](#modaloptions).dismissable is set to true then the modal will be dismissed if the user clicks anywhere outside the modal.
 
@@ -160,7 +160,7 @@ The ModalProvider allows an application to display modals. This component is pla
 
 |Prop|Type|Description|
 |---|---|---|
-|\[**uid**\]|string|_Optional_ a unique identifier for this modal provider that can be used to direct a modal request to a specific provider instance.|
+|\[**uid**\]|string|_Optional_ unique identifier for this modal provider that can be used to direct a modal request to a specific provider instance.|
 |\[**children**\]|Element \| Element[]|_Optional_ components between ModalProvider opening and closing tags.|
 
 ### dismissModal
