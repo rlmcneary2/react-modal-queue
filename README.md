@@ -1,17 +1,17 @@
-# react-modal-provider
+# react-modal-queue
 
 Raise modal dialogs and views from any JavaScript code in a React application. **This package is different from other React modal packages because it does _not_ require a component in every location that a modal element needs to appear, instead a single ModalProvider is used to display modals.** This is especially helpful when a modal element needs to be displayed but the modal may not be related to the current view in the UI; for example a long-running background process encounters a problem and needs to display an error.
 
 ## Install
 ```
-npm i -S react-modal-provider
+npm i -S react-modal-queue
 ```
 
 ## Usage
 Typically you will just wrap your application in the ModalProvider component. Rarely you may need more than one ModalProvider; in such a case pass the single optional prop named `uid` with a string value to uniquely identify each ModalProvider.
 
 ```javascript
-import { ModalProvider } from "react-modal-provider";
+import { ModalProvider } from "react-modal-queue";
 
 export default = props => {
     return (
@@ -25,7 +25,7 @@ export default = props => {
 When you need to display a modal element use `raiseModalElement()`. This function takes a single argument: an instance of ModalOptions with information about the modal, and returns a function that can be used to dismiss the modal when it is no longer needed.
 
 ```javascript
-import { raiseModalElement } from "react-modal-provider";
+import { raiseModalElement } from "react-modal-queue";
 
 export default = props => {
     // The function raiseModal() will be passed to a button's onClick prop.
@@ -52,7 +52,7 @@ export default = props => {
 The following example is from part of a service that fetches temperature information from a remote location. If the data indicates there is a problem then a warning modal is shown regardless of which app view is currently displayed.
 
 ```javascript
-import { raiseModalElement } from "react-modal-provider";
+import { raiseModalElement } from "react-modal-queue";
 
 // An error modal is raised when the temperature status is out-of-range.
 const response = await fetch(`https://example.com/?status=temperature`);

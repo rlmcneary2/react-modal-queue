@@ -23,7 +23,7 @@
 
 
 const babelOptions = require("./babel.config");
-const moduleName = "react-modal-provider";
+const moduleName = "react-modal-queue";
 const path = require("path");
 const plugins = require("./webpack.plugins");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");

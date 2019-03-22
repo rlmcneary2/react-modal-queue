@@ -1,8 +1,8 @@
 {
-  "name": "react-modal-provider",
+  "name": "react-modal-queue",
   "version": "0.0.0",
   "description": "Raise modal dialogs and views from any JavaScript code in a React application.",
-  "main": "dist/react-modal-provider.js",
+  "main": "dist/react-modal-queue.js",
   "scripts": {
     "build": "npm run clean && webpack --env.NODE_ENV=production",
     "clean": "rimraf ./dist/*.ts ./dist/*.js ./dist/*.map",
