@@ -157,41 +157,48 @@ If [ModalOptions](#modaloptions).dismissable is set to true then the modal will 
 
 ### \<ModalProvider\>
 The ModalProvider allows an application to display modals. This component is placed at the root of an application and is reponsible for controlling modals.
-#### Props: ModalProviderProps
-**uid**: string<br />_Optional_ a unique identifier for this modal provider that can be used to direct a modal request to a specific provider instance.
 
-**children**: Element | Element[]<br />_Optional_ components between ModalProvider opening and closing tags.
+|Prop|Type|Description|
+|---|---|---|
+|\[**uid**\]|string|_Optional_ a unique identifier for this modal provider that can be used to direct a modal request to a specific provider instance.|
+|\[**children**\]|Element \| Element[]|_Optional_ components between ModalProvider opening and closing tags.|
 
 ### dismissModal
 A function returned from [raiseModalElement](#raisemodalelement). When invoked it dismisses the raised modal. Takes no parameters and returns void.
 
 ### raiseModalElement
 Invoke this function to display a modal.
-#### Parameters
-**options**: [ModalOptions](#modaloptions)<br />The options for the modal.
+
+|Parameter|Type|Description|
+|---|---|---|
+|**options**|[ModalOptions](#modaloptions)|The options for the modal.|
+
 #### Returns
 [DismissModal](#dismissmodal) A function to dismiss the modal that was raised.
 
 ### ModalBodyProps
 Information displayed in the main content of a modal.
-### Properties
-**content**: string | string[] | JSX.Element<br />The main content can be one or more strings, or a component. Strings will be placed inside \<p\> elements.
+
+|Property|Type|Description|
+|---|---|---|
+|**content**|string \| string[] \| JSX.Element|The main content can be one or more strings, or a component. Strings will be placed inside \<p\> elements.|
 
 ### ModalFooterProps
 Props to configure the bottom portion of the modal.
-### Properties
-**content**: [ModalFooterButtonHandlerProps](#modalfooterbuttonhandlerprops) | [ModalFooterButtonProps](#modalfooterbuttonprops)[] | JSX.Element
+
+|Property|Type|Description|
+|---|---|---|
+|**content**|[ModalFooterButtonHandlerProps](#modalfooterbuttonhandlerprops) \| [ModalFooterButtonProps](#modalfooterbuttonprops)[] \| JSX.Element|The contents of the footer.|
 
 ### ModalFooterButtonProps
 Allows simple and semi-custom buttons to be created in the footer.
-### Properties
-**className**: string<br />_Optional_ class name that will be set on the button.
 
-**content**: string | JSX.Element<br />The information that will be displayed as the contents of a button element.
-
-**focus**: boolean<br />_Optional_ if true the button will be focused. This should be true for only one button in the array.
-
-**onClick**: (props: [ModalFooterButtonProps](#modalfooterbuttonprops)) => void<br />_Optional_ handler that will be invoked when the button is clicked.
+|Property|Type|Description|
+|---|---|---|
+|\[**className**\]|string|_Optional_ class name that will be set on the button.
+|**content**|string \| JSX.Element|The information that will be displayed as the contents of a button element.|
+|\[**focus** = false\]|boolean|_Optional_ if true the button will be focused. This should be true for only one button in the array.|
+|\[**onClick**\]|(props: [ModalFooterButtonProps](#modalfooterbuttonprops)) => void|_Optional_ handler that will be invoked when the button is clicked.
 
 ### ModalFooterButtonHandlerProps
 The simplest way to create a footer with one or two buttons, simply add handlers for the corresponding buttons.
@@ -199,31 +206,24 @@ The simplest way to create a footer with one or two buttons, simply add handlers
 |Property|Type|Description|
 |---|---|---|
 |**onAffirmativeClick**|() => void|Invoked when the affirmative button is clicked.|
-|**onNegativeClick**|() => void|_Optional_ handler for a negative response button. If not supplied the button will not appear.|
-|**primary**|"affirmative" \| "negative"|_Optional_ toggle to set the class "primary" on one of the two buttons.|
-
-**onAffirmativeClick**: () => void<br />Invoked when the affirmative button is clicked.
-
-**onNegativeClick**: () => void<br />_Optional_ handler for a negative response button. If not supplied the button will not appear.
-
-**primary**: "affirmative" | "negative"<br />_Optional_ toggle to set the class "primary" on one of the two buttons.
+|\[**onNegativeClick**\]|() => void|_Optional_ handler for a negative response button. If not supplied the button will not appear.|
+|\[**primary**\]|"affirmative" \| "negative"|_Optional_ toggle to set the class "primary" on one of the two buttons.|
 
 ### ModalOptions
 Object that controls the display of a modal.
-#### Properties
-**body**: [ModalBodyProps](#modalbodyprops)<br/>The information to display in the main part of the modal.
 
-**dismissable**: boolean<br/>_Optional_ if true the modal can be dismissed by clicking outside of the modal.
-
-**footer**: [ModalFooterProps](#modalfooterprops)<br/>_Optional_ information displayed at the bottom of the modal.
-
-**providerUid**: string<br/>_Optional_ the unique identifier of the provider.
-
-**title**: [ModalTitleProps](#modaltitleprops)<br/>_Optional_ A title to display at the top of the modal.
-
-**uid**: string<br/>A unique identifier for this modal. Only one modal with this unique identifier can be queued at a time.
+|Property|Type|Description|
+|---|---|---|
+|**body**|[ModalBodyProps](#modalbodyprops)|The information to display in the main part of the modal.|
+|\[**dismissable** = false\]|boolean|_Optional_ if true the modal can be dismissed by clicking outside of the modal.|
+|\[**footer**\]|[ModalFooterProps](#modalfooterprops)|_Optional_ information displayed at the bottom of the modal.|
+|\[**providerUid**\]|string|_Optional_ the unique identifier of the provider.|
+|\[**title**\]|[ModalTitleProps](#modaltitleprops)|_Optional_ A title to display at the top of the modal.|
+|**uid**|string|A unique identifier for this modal. Only one modal with this unique identifier can be queued at a time.|
 
 ### ModalTitleProps
 Data used to display the title of a modal.
-#### Properties
-**content**: string | JSX.Element<br />The information to display in the title. A string will be displayed as the content of an \<h1\> element.
+
+|Property|Type|Description|
+|---|---|---|
+|**content**|string \| JSX.Element|The information to display in the title. A string will be displayed as the content of an \<h1\> element.|
