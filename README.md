@@ -198,7 +198,7 @@ Allows simple and semi-custom buttons to be created in the footer.
 |\[**className**\]|string|_Optional_ class name that will be set on the button.
 |**content**|string \| JSX.Element|The information that will be displayed as the contents of a button element.|
 |\[**focus** = false\]|boolean|_Optional_ if true the button will be focused. This should be true for only one button in the array.|
-|\[**onClick**\]|(props: [ModalFooterButtonProps](#modalfooterbuttonprops))<code>&nbsp;</code>=><code>&nbsp;</code>void|_Optional_ handler that will be invoked when the button is clicked.
+|\[**onClick**\]|(props: [ModalFooterButtonProps](#modalfooterbuttonprops)) => void|_Optional_ handler that will be invoked when the button is clicked.
 
 ### ModalFooterButtonHandlerProps
 The simplest way to create a footer with one or two buttons, simply add handlers for the corresponding buttons.
