@@ -1,6 +1,6 @@
 {
   "name": "react-modal-queue",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Raise modal dialogs and views from any JavaScript code in a React application.",
   "main": "dist/react-modal-queue.min.js",
   "scripts": {
