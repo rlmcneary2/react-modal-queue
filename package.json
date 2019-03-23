@@ -12,9 +12,9 @@
   },
   "keywords": [
     "react",
+    "reactjs",
     "modal",
-    "dialog",
-    "provider"
+    "dialog"
   ],
   "author": "Richard L. McNeary II",
   "license": "MIT",
@@ -46,5 +46,6 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.3"
   },
+  "files": ["umd"],
   "types": "dist/index.d.ts"
 }
