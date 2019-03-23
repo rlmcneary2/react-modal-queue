@@ -4,10 +4,11 @@
   "description": "Raise modal dialogs and views from any JavaScript code in a React application.",
   "main": "dist/react-modal-queue.js",
   "scripts": {
-    "build": "npm run clean && webpack --env.NODE_ENV=production",
-    "clean": "rimraf ./dist/*.ts ./dist/*.js ./dist/*.map",
+    "build": "npm run clean && webpack --env.NODE_ENV=production && npm run unpkg",
+    "clean": "rimraf ./dist ./umd",
     "debug": "npm run clean && webpack && npm link",
-    "test": "echo \"No tests.\""
+    "test": "echo \"No tests.\"",
+    "unpkg": "copyfiles -f ./dist/react-modal-queue.js ./umd"
   },
   "keywords": [
     "react",
@@ -29,6 +30,7 @@
     "@types/prop-types": "^15.7.0",
     "@types/react": "^16.8.7",
     "babel-loader": "^8.0.5",
+    "copyfiles": "^2.1.0",
     "rimraf": "^2.6.3",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^5.3.3",
