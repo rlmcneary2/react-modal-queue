@@ -99,8 +99,8 @@ const config = {
     },
     output: {
         filename: null, // set below in module.exports
-        globalObject: "this", // temporary workaround for https://github.com/webpack/webpack/issues/6642
-        library: { amd: moduleName, commonjs: moduleName, root: "ReactModalProvider" },
+        globalObject: "(typeof self !== 'undefined' ? self : this)", // temporary workaround for https://github.com/webpack/webpack/issues/6642
+        library: { amd: moduleName, commonjs: moduleName, root: "ReactModalQueue" },
         libraryTarget: "umd",
         path: path.resolve(__dirname, _OUTPUT_DIR),
         publicPath: "/dist/",
