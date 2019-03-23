@@ -98,7 +98,7 @@ const config = {
         ]
     },
     output: {
-        filename: `${moduleName}.js`,
+        filename: null, // set below in module.exports
         globalObject: "this", // temporary workaround for https://github.com/webpack/webpack/issues/6642
         library: { amd: moduleName, commonjs: moduleName, root: "ReactModalProvider" },
         libraryTarget: "umd",
@@ -123,6 +123,8 @@ module.exports = env => {
 
     config.mode = mode;
     console.log(`webpack.config.js - mode: '${config.mode}'.`);
+
+    config.output.filename = `${moduleName}${mode === "production" ? ".min" : ""}.js`;
 
     config.plugins = plugins(mode !== "production");
 
