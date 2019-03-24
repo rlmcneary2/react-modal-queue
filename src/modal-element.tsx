@@ -22,7 +22,7 @@
 
 
 import React, { forwardRef, useEffect, useRef, useState } from "react";
-import { DismissModal, ModalElementProps, ModalFooterPropsInternal, ModalOptions } from "./interfaces";
+import { DismissModal, ModalElementProps, ModalFooterPropsInternal, ModalOptions, ModalFooterProps } from "./interfaces";
 import ModalBody from "./modal-body";
 import ModalFooter from "./modal-footer";
 import ModalTitle from "./modal-title";
@@ -133,9 +133,12 @@ export default forwardRef((props: ModalElementProps, forwardedRef): JSX.Element 
             const { options: modalOptions } = currentModalItem;
             const { body: bodyProps, footer: footerProps, title: titleProps} = modalOptions;
 
-            (footerProps as ModalFooterPropsInternal).dismiss = currentModalItem.dismissModalElement;
+            let nextFooterProps: ModalFooterPropsInternal;
+            if (footerProps) {
+                nextFooterProps = { ...footerProps, ...{ dismiss: currentModalItem.dismissModalElement } };
+            }
 
-            const footer = footerProps ? (<ModalFooter {...(footerProps as ModalFooterPropsInternal)} />) : null;
+            const footer = nextFooterProps ? (<ModalFooter {...nextFooterProps} />) : null;
             const title = titleProps ? (<ModalTitle {...titleProps} />) : null;
 
             content = (
