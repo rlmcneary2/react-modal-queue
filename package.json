@@ -4,7 +4,7 @@
   "description": "Raise modal dialogs and views from any JavaScript code in a React application.",
   "main": "dist/react-modal-queue.min.js",
   "scripts": {
-    "build": "npm run clean && webpack --env.NODE_ENV=production && npm run unpkg",
+    "build": "npm run clean && webpack && webpack --env.NODE_ENV=production && npm run unpkg",
     "clean": "rimraf ./dist ./umd",
     "debug": "npm run clean && webpack && npm link",
     "test": "echo \"No tests.\"",
