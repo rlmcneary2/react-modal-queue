@@ -22,8 +22,7 @@
  */
 
 
-const babelOptions = require("./babel.config");
-const moduleName = "react-modal-queue";
+// const babelOptions = require("./babel.config");
 const path = require("path");
 const plugins = require("./webpack.plugins");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
@@ -31,6 +30,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 const _OUTPUT_DIR = "dist";
 const _SOURCE_DIR = "src";
+const moduleName = "react-modal-queue";
 
 
 /**
@@ -38,7 +38,7 @@ const _SOURCE_DIR = "src";
  * This is a webpack 4 configuration file.
  */
 const config = {
-    devtool: "source-maps",
+    // devtool, // set below in module.exports
     entry: {
         index: `./${_SOURCE_DIR}/index.ts`
     },
@@ -124,6 +124,10 @@ module.exports = env => {
     config.mode = mode;
     console.log(`webpack.config.js - mode: '${config.mode}'.`);
 
+    // Capture an undefined variable.
+    let undef;
+
+    config.devtool = `${mode === "production" ? undef : "inline-source-map"}`;
     config.output.filename = `${moduleName}${mode === "production" ? ".min" : ""}.js`;
 
     config.plugins = plugins(mode !== "production");
