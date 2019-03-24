@@ -2,6 +2,8 @@
 
 Raise modal dialogs and views from any JavaScript code in a React application. **This package is different from other React modal packages because it does _not_ require a component in every location that a modal element needs to appear, instead a single ModalProvider is used to display modals.** This is especially helpful when a modal element needs to be displayed but the modal may not be related to the current view in the UI; for example a long-running background process encounters a problem and needs to display an error.
 
+There is a live example using ModalProvider and raiseModalElement at [CodePen](https://codepen.io/rlmcneary2/pen/LaMJVz) to help you get started.
+
 ## Install
 ```
 npm i -S react-modal-queue
@@ -32,13 +34,15 @@ export default = props => {
     const raiseModal = () => {
         // The raiseModalElement() function returns a function to dismiss the modal.
         const dismissModal = raiseModalElement({
-            body: (<input placeholder="Your name..." type="text" />), // The main message in the modal.
+            body: { content: (<input placeholder="Your name..." type="text" />) }, // The main message in the modal.
             footer: {
-                onAffirmativeClick: () => submit(dismissModal),       // Displays a string like "OK".
-                onNegativeClick: () => close(dismissModal)            // Displays a string like "Cancel".
+                content: {
+                    onAffirmativeClick: () => submit(dismissModal), // Displays a string like "OK".
+                    onNegativeClick: () => close(dismissModal) // Displays a string like "Cancel".
+                }
             },
-            title: "Enter your name",                                 // Appears at the top of the modal.
-            uid: "MODAL_ENTER_NAME"                                   // Uniquely identifies this modal.
+            title: { content: "Enter your name" }, // Appears at the top of the modal.
+            uid: "MODAL_ENTER_NAME" // Uniquely identifies this modal.
         });
     };
     
@@ -61,9 +65,9 @@ if (response.ok) {
     const data = await response.json();
     if (data.danger) {
         const dismissModal = raiseModalElement({
-            body: "Temperature is dangerously high! You should probably do something about this.",
-            footer: { onAffirmativeClick: () => dismissModal },
-            title: "Warning!",
+            body: { content: "Temperature is dangerously high! You should probably do something about this." },
+            footer: { content: { onAffirmativeClick: () => dismissModal } },
+            title: { content: "Warning!" },
             uid: "MODAL_WARNING"
         });
     }
@@ -113,11 +117,11 @@ A set of buttons will be displayed in the modal's footer. There are three differ
 
 An example using handler functions.
 ```javascript
-const footer = {
+const footer = { content: {
     onAffirmativeClick: () => dismissModal(), // This handler is required and a single button will display.
     onNegativeClick: () => dismissModal(),    // Optional. Two buttons will be displayed.
     primary: "affirmative"                    // Optional. If specified the class "primary" will be added to the button.
-};
+} };
 ```
 ```css
 .modal-element-button.affirmative:before {
@@ -135,16 +139,18 @@ const footer = {
 
 It's also possible to supply button definitions in an array. There is more flexibility here since the content of the button can be set, a custom class can be set on the button, a button can be focused, and there are no limits on the number of buttons. Here three buttons are created.
 ```javascript
-const footer = [{                        // Button #1
-    className: "primary",                // Optional. Will be set on the button.
-    content: "Yes",                      // The information to display in the button. A string or React Component are both valid.
-    focus: true,                         // Optional. If true the button will be focused.
-    onClick: () => submit(dismissModal), // Optional. Invoked when the button is clicked. If not provided clicking the button will dismiss the dialog.
-}, {                                     // Button #2
-    content: "No",                       // The information to display in the button. A string or React Component are both valid.
-}, {                                     // Button #3
-    content: "Maybe",                    // The information to display in the button. A string or React Component are both valid.
-}];
+const footer = {
+    content: [{                        // Button #1
+        className: "primary",                // Optional. Will be set on the button.
+        content: "Yes",                      // The information to display in the button. A string or React Component are both valid.
+        focus: true,                         // Optional. If true the button will be focused.
+        onClick: () => submit(dismissModal), // Optional. Invoked when the button is clicked. If not provided clicking the button will dismiss the dialog.
+    }, {                                     // Button #2
+        content: "No",                       // The information to display in the button. A string or React Component are both valid.
+    }, {                                     // Button #3
+        content: "Maybe",                    // The information to display in the button. A string or React Component are both valid.
+    }]
+};
 ```
 ## Notes
 Modal requests are queued and processed in the order they are received. Only one modal is displayed at a time.
