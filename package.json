@@ -1,6 +1,6 @@
 {
   "name": "react-modal-queue",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Raise modal dialogs and views from any JavaScript code in a React application.",
   "author": "Richard L. McNeary II",
   "homepage": "https://github.com/rlmcneary2/react-modal-queue",
