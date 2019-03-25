@@ -2,14 +2,14 @@
 
 Raise modal dialogs and views from any JavaScript code in a React application. **This package is different from other React modal packages because it does _not_ require a component in every location that a modal element needs to appear, instead a single ModalProvider is used to display modals.** This is especially helpful when a modal element needs to be displayed but the modal may not be related to the current view in the UI; for example a long-running background process encounters a problem and needs to display an error.
 
-There is a live example using ModalProvider and raiseModalElement at [CodePen](https://codepen.io/rlmcneary2/pen/LaMJVz) to help you get started.
+There is a live example using ModalProvider and raiseModalElement at [CodePen](https://codepen.io/rlmcneary2/pen/LaMJVz) to help you get started. Another [CodePen](https://codepen.io/rlmcneary2/pen/pYYpQv) example shows the use of [react-transition-group](http://reactcommunity.org/react-transition-group/) to animate the appearance and disappearance of the modal.
 
 ## Install
 ```
 npm i -S react-modal-queue
 ```
 
-## Usage
+## Use
 Typically you will just wrap your application in the ModalProvider component. Rarely you may need more than one ModalProvider; in such a case pass the single optional prop named `uid` with a string value to uniquely identify each ModalProvider.
 
 ```javascript
