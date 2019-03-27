@@ -89,7 +89,7 @@ interface ModalFooterButtonHandlerProps {
  */
 interface ModalOptions {
     /** The information to display in the modal element. */
-    body: ModalBodyProps;
+    body: string | string[] | ModalBodyProps;
 
     /** If true the modal can be dismissed by clicking outside of the modal element. */
     dismissable?: boolean;
@@ -101,7 +101,7 @@ interface ModalOptions {
     providerUid?: string;
 
     /** A title to display at the top of the modal element. */
-    title?: ModalTitleProps;
+    title?: string | ModalTitleProps;
 
     /** A unique identifier for this modal. */
     uid: string;

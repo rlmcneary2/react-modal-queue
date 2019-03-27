@@ -133,18 +133,28 @@ export default forwardRef((props: ModalElementProps, forwardedRef): JSX.Element 
             const { options: modalOptions } = currentModalItem;
             const { body: bodyProps, footer: footerProps, title: titleProps} = modalOptions;
 
+            // Footer
             let nextFooterProps: ModalFooterPropsInternal;
             if (footerProps) {
                 nextFooterProps = { ...footerProps, ...{ dismiss: currentModalItem.dismissModalElement } };
             }
 
             const footer = nextFooterProps ? (<ModalFooter {...nextFooterProps} />) : null;
-            const title = titleProps ? (<ModalTitle {...titleProps} />) : null;
+
+            // Title
+            let title: JSX.Element = null;
+            if (titleProps) {
+                const mtProps = typeof titleProps === "string" ? { content: titleProps } : titleProps;
+                title = titleProps ? (<ModalTitle {...mtProps} />) : null;
+            }
+
+            // Body
+            const mbProps = typeof bodyProps === "string" || Array.isArray(bodyProps) ? { content: bodyProps } : bodyProps;
 
             content = (
                 <>
                     {title}
-                    <ModalBody {...bodyProps} />
+                    <ModalBody {...mbProps} />
                     {footer}
                 </>
             );
