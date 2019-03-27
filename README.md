@@ -132,11 +132,11 @@ Object that controls the display of a modal.
 
 |Property|Type|Description|
 |---|---|---|
-|**body**|[ModalBodyProps](#modalbodyprops)|The information to display in the main part of the modal.|
+|**body**|string \| string[] \| [ModalBodyProps](#modalbodyprops)|The information to display in the main part of the modal.|
 |\[**dismissable** = false\]|boolean|_Optional_ if true the modal can be dismissed by clicking outside of the modal.|
 |\[**footer**\]|[ModalFooterProps](#modalfooterprops)|_Optional_ information displayed at the bottom of the modal.|
 |\[**providerUid**\]|string|_Optional_ unique identifier of the provider.|
-|\[**title**\]|[ModalTitleProps](#modaltitleprops)|_Optional_ title to display at the top of the modal.|
+|\[**title**\]|string \| [ModalTitleProps](#modaltitleprops)|_Optional_ title to display at the top of the modal.|
 |**uid**|string|A unique identifier for this modal. Only one modal with this unique identifier can be queued at a time.|
 
 <h3 style="margin: 40px 0 5px 0;">ModalTitleProps</h3>
