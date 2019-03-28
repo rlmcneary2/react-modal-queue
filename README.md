@@ -1,7 +1,11 @@
 # react-modal-queue
 
-Raise modal dialogs and views from any JavaScript code in a React application. **This package is different from other React modal packages because it does _not_ require a component in every location that a modal needs to appear, instead a single ModalProvider is used to display modals.** This is especially helpful when a modal needs to be displayed but the modal may not be related to the current view in the UI; for example a long-running background process encounters a problem and needs to display an error.
+Raise modal dialogs and views from any JavaScript code in a React application. **This package is different from other React modal packages because it does _not_ require a component in every location that a modal needs to appear, instead a single ModalProvider is used to display modals.**
 
+## Advantages
+- Does not require a React component in every location where a modal needs to appear, instead a single ModalProvider at the base of the application is used to display modals.
+- Triggering the display of a modal can be done from any code in the application and is not restricted to React components; for example a long-running background process encounters a problem and needs to display an error.
+- A single DOM location for the appearance of modals simplifies styling and animating modals.
 
 ## Examples
 A basic JavaScript and CSS implementation to display the modal above the page contents. [Demonstrates using `ModalProvider` and `raiseModalElement`](https://codepen.io/rlmcneary2/pen/LaMJVz).
