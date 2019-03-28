@@ -137,7 +137,7 @@ Object that controls the display of a modal.
 |Property|Type|Description|
 |---|---|---|
 |**body**|string \| string[] \| [ModalBodyProps](#modalbodyprops)|The information to display in the main part of the modal.|
-|\[**dismissable** = false\]|boolean|_Optional_ if true the modal can be dismissed by clicking outside of the modal.|
+|\[**dismissable** = false\]|boolean \| [OnDismissableModalDismissed](#ondismissablemodaldismissed)|_Optional_ if true the modal can be dismissed by clicking outside of the modal.|
 |\[**footer**\]|[ModalFooterProps](#modalfooterprops)|_Optional_ information displayed at the bottom of the modal.|
 |\[**providerUid**\]|string|_Optional_ unique identifier of the provider.|
 |\[**title**\]|string \| [ModalTitleProps](#modaltitleprops)|_Optional_ title to display at the top of the modal.|
@@ -149,3 +149,6 @@ Data used to display the title of a modal.
 |Property|Type|Description|
 |---|---|---|
 |**content**|string \| JSX.Element|The information to display in the title. A string will be displayed as the content of an \<h1\> element.|
+
+<h3 style="margin: 40px 0 5px 0;">OnDismissableModalDismissed</h3>
+A function that is invoked by a modal to indicate that the user has clicked outside of a dismissable modal. This function should be provided if the disappearance of the modal is animated and the function creator needs to start that animation. Takes no parameters and returns void.
