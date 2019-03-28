@@ -73,7 +73,7 @@ Modal requests are queued and processed in the order they are received. Only one
 
 Showing and hiding the modal can be animated using the [react-transition-group](http://reactcommunity.org/react-transition-group/) package. Wrap the <ModalProvider> component in a transition component and the transition classes will be set on the `modal-element-overlay` element.
 
-If [ModalOptions](#modaloptions).dismissable is set to true then the modal will be dismissed if the user clicks anywhere outside the modal.
+If [ModalOptions](#modaloptions).dismissable is set to true or to an [OnDismissableModalDismissed](#ondismissablemodaldismissed) function then the modal can be dismissed if the user clicks anywhere outside the modal.
 
 ## API
 
