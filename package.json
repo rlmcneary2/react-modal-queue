@@ -16,7 +16,7 @@
     "type": "git",
     "url": "https://github.com/rlmcneary2/react-modal-queue.git"
   },
-  "main": "dist/react-modal-queue.min.js",
+  "main": "dist/react-modal-queue.js",
   "scripts": {
     "build": "npm run clean && webpack && webpack --env.NODE_ENV=production && npm run unpkg",
     "clean": "rimraf ./dist ./umd",
