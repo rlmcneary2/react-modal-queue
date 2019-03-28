@@ -6,7 +6,8 @@
         "alwaysStrict": true,
         "baseUrl": ".",
         "declaration": true,
-        "inlineSources": false,
+        "inlineSourceMap": true,
+        "inlineSources": true,
         "jsx": "preserve",
         "lib": [
             "dom",
@@ -23,7 +24,6 @@
         "outDir": "dist",
         "preserveConstEnums": true,
         "removeComments": false,
-        "sourceMap": true,
         "suppressImplicitAnyIndexErrors": true,
         "target": "esnext"
     },
