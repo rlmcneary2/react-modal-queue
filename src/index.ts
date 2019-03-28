@@ -21,6 +21,7 @@
  */
 
 
+import BaseModal from "./components/base-modal";
 import {
     DismissModal,
     ModalBodyProps,
@@ -34,6 +35,7 @@ import { raiseModalElement } from "./modal-element";
 import { ModalProvider } from "./modal-provider";
 
 export {
+    BaseModal,
     DismissModal,
     ModalBodyProps,
     ModalFooterButtonHandlerProps,
