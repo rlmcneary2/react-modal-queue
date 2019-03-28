@@ -1,7 +1,11 @@
 # react-modal-queue
 
-Raise modal dialogs and views from any JavaScript code in a React application. **This package is different from other React modal packages because it does _not_ require a component in every location that a modal element needs to appear, instead a single ModalProvider is used to display modals.** This is especially helpful when a modal element needs to be displayed but the modal may not be related to the current view in the UI; for example a long-running background process encounters a problem and needs to display an error.
+Raise modal dialogs and views from any JavaScript code in a React application. **This package is different from other React modal packages because it does _not_ require a component in every location that a modal needs to appear, instead a single ModalProvider is used to display modals.**
 
+## Advantages
+- Does not require a React component in every location where a modal needs to appear, instead a single ModalProvider at the base of the application is used to display modals.
+- Triggering the display of a modal can be done from any code in the application and is not restricted to React components; for example a long-running background process encounters a problem and needs to display an error.
+- A single DOM location for the appearance of modals simplifies styling and animating modals.
 
 ## Examples
 A basic JavaScript and CSS implementation to display the modal above the page contents. [Demonstrates using `ModalProvider` and `raiseModalElement`](https://codepen.io/rlmcneary2/pen/LaMJVz).
@@ -14,7 +18,7 @@ npm i -S react-modal-queue
 ```
 
 ## Use
-Typically you will just wrap your application in the ModalProvider component. Rarely you may need more than one ModalProvider; in such a case pass the single optional prop named `uid` with a string value to uniquely identify each ModalProvider.
+Typically you will just wrap your application in the ModalProvider component.
 
 ```javascript
 import { ModalProvider } from "react-modal-queue";
@@ -28,7 +32,7 @@ export default = props => {
 };
 ```
 
-When you need to display a modal element use `raiseModalElement()`. This function takes a single argument: an instance of ModalOptions with information about the modal, and returns a function that can be used to dismiss the modal when it is no longer needed.
+When you need to display a modal use `raiseModalElement()`. This function takes a single argument: an instance of ModalOptions with information about the modal, and returns a function that can be used to dismiss the modal when it is no longer needed.
 
 ```javascript
 import { raiseModalElement } from "react-modal-queue";
@@ -37,14 +41,14 @@ export default = props => {
 
     const raiseModal = () => {
         const dismissModal = raiseModalElement({
-            body: "You clicked the modal button.",
+            body: "You raised a modal!",
             footer: {
                 content: {
                     onAffirmativeClick: () => dismissModal(),
                 }
             },
-            title: "Enter your name",
-            uid: "MODAL_ENTER_NAME"
+            title: "Modal Title",
+            uid: "MODAL_EXAMPLE"
         });
     };
     
@@ -62,7 +66,7 @@ The title content can be a string that will be placed into an \<h1\> element or 
 A modal's body content can be created simply by providing a single string or an array of strings. Each string will be surrounded by a \<p\> element. If more customization is needed a React Component can be provided for the body.
 
 ### Footer
-A set of buttons can be displayed in the modal's footer. There are three different options for defining the footer: one or two buttons can be displayed by passing handlers, a set of button definitions can be provided in an array, or a React Component can be provided as the footer content. 
+A set of buttons can be displayed in the modal's footer. There are three different options for defining the footer: one or two buttons can be displayed by passing handler functions, a set of button definitions can be provided in an array, or a React Component can be provided as the footer content. 
 
 ## Notes
 Modal requests are queued and processed in the order they are received. Only one modal is displayed at a time.
@@ -133,7 +137,7 @@ Object that controls the display of a modal.
 |Property|Type|Description|
 |---|---|---|
 |**body**|string \| string[] \| [ModalBodyProps](#modalbodyprops)|The information to display in the main part of the modal.|
-|\[**dismissable** = false\]|boolean|_Optional_ if true the modal can be dismissed by clicking outside of the modal.|
+|\[**dismissable** = false\]|boolean \| [OnDismissableModalDismissed](#ondismissablemodaldismissed)|_Optional_ if true the modal can be dismissed by clicking outside of the modal.|
 |\[**footer**\]|[ModalFooterProps](#modalfooterprops)|_Optional_ information displayed at the bottom of the modal.|
 |\[**providerUid**\]|string|_Optional_ unique identifier of the provider.|
 |\[**title**\]|string \| [ModalTitleProps](#modaltitleprops)|_Optional_ title to display at the top of the modal.|
@@ -145,3 +149,6 @@ Data used to display the title of a modal.
 |Property|Type|Description|
 |---|---|---|
 |**content**|string \| JSX.Element|The information to display in the title. A string will be displayed as the content of an \<h1\> element.|
+
+<h3 style="margin: 40px 0 5px 0;">OnDismissableModalDismissed</h3>
+A function that is invoked by a modal to indicate that the user has clicked outside of a dismissable modal. This function should be provided if the disappearance of the modal is animated and the function creator needs to start that animation. Takes no parameters and returns void.

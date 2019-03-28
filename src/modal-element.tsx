@@ -111,9 +111,13 @@ export default forwardRef((props: ModalElementProps, forwardedRef): JSX.Element 
 
         const currentModalItem = findModalItem(providerUid, currentModalUid);
         if (currentModalItem && currentModalItem.options.dismissable) {
-            // Let the stack for the click event unwind before dismissing the
-            // modal element.
-            setTimeout(() => currentModalItem.dismissModalElement());
+            if (typeof currentModalItem.options.dismissable === "function") {
+                currentModalItem.options.dismissable();
+            } else {
+                // Let the stack for the click event unwind before dismissing the
+                // modal element.
+                setTimeout(() => currentModalItem.dismissModalElement());
+            }
         }
     };
 

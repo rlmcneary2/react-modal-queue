@@ -88,19 +88,19 @@ interface ModalFooterButtonHandlerProps {
  * Props that control the display of a modal.
  */
 interface ModalOptions {
-    /** The information to display in the modal element. */
+    /** The information to display in the modal. */
     body: string | string[] | ModalBodyProps;
 
-    /** If true the modal can be dismissed by clicking outside of the modal element. */
-    dismissable?: boolean;
+    /** If true or a handler is provided the modal can be dismissed by clicking outside of the modal. */
+    dismissable?: boolean | OnDismissableModalDismissed;
 
-    /** Information displayed at the bottom of the modal element. */
+    /** Information displayed at the bottom of the modal. */
     footer?: ModalFooterProps;
 
     /** The unique identifier of the provider. */
     providerUid?: string;
 
-    /** A title to display at the top of the modal element. */
+    /** A title to display at the top of the modal. */
     title?: string | ModalTitleProps;
 
     /** A unique identifier for this modal. */
@@ -142,6 +142,11 @@ interface ModalElementProps {
 interface ModalFooterPropsInternal extends ModalFooterProps {
     dismiss: DismissModal;
 }
+
+/**
+ * A handler invoked when the user has requested that a dismissable modal be dismissed.
+ */
+type OnDismissableModalDismissed = () => void;
 
 
 export {
