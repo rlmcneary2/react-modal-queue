@@ -110,7 +110,7 @@ The ModalProvider allows an application to display modals. This component is pla
 |Prop|Type|Description|
 |---|---|---|
 |\[**uid**\]|string|_Optional_ unique identifier for this modal provider that can be used to direct a modal request to a specific provider instance.|
-|\[**children**\]|Element \| Element[]|_Optional_ components between ModalProvider opening and closing tags.|
+|\[**children**\]|JSX.Element \| JSX.Element[]|_Optional_ components between ModalProvider opening and closing tags.|
 
 <h3 style="margin: 40px 0 0 0;">dismissModal</h3>
 
@@ -160,8 +160,8 @@ The simplest way to create a footer with one or two buttons, simply add handlers
 
 |Property|Type|Description|
 |---|---|---|
-|**onAffirmativeClick**|() => void|Invoked when the affirmative button is clicked.|
-|\[**onNegativeClick**\]|() => void|_Optional_ handler for a negative response button. If not supplied the button will not appear.|
+|**onAffirmativeClick**|[OnClickHandler](#onclickhandler)|Invoked when the affirmative button is clicked.|
+|\[**onNegativeClick**\]|[OnClickHandler](#onclickhandler)|_Optional_ handler for a negative response button. If not supplied the button will not appear.|
 |\[**primary**\]|"affirmative" \| "negative"|_Optional_ toggle to set the class "primary" on one of the two buttons.|
 
 <h3 style="margin: 40px 0 0 0;">ModalOptions</h3>
