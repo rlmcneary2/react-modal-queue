@@ -42,11 +42,7 @@ export default = props => {
     const raiseModal = () => {
         const dismissModal = raiseModalElement({
             body: "You raised a modal!",
-            footer: {
-                content: {
-                    onAffirmativeClick: () => dismissModal(),
-                }
-            },
+            footer: () => dismissModal(),
             title: "Modal Title",
             uid: "MODAL_EXAMPLE"
         });
@@ -66,7 +62,29 @@ The title content can be a string that will be placed into an \<h1\> element or 
 A modal's body content can be created simply by providing a single string or an array of strings. Each string will be surrounded by a \<p\> element. If more customization is needed a React Component can be provided for the body.
 
 ### Footer
-A set of buttons can be displayed in the modal's footer. There are three different options for defining the footer: one or two buttons can be displayed by passing handler functions, a set of button definitions can be provided in an array, or a React Component can be provided as the footer content. 
+A set of buttons can be displayed in the modal's footer. There are three different options for defining the footer: one or two buttons can be displayed by passing handler functions, a set of button definitions can be provided in an array, or a React Component can be provided as the footer content.
+
+## Style and Appearance
+The ModalProvider adds and removes elements from the document's DOM to display a modal. The appearance of those elements as a "modal UI element" depends entirely on the CSS that is applied to them. When a modal is created it will look like this in the DOM (the contents of title, body, and footer will vary depending on the props set) and will appear after the contents of ModalProvider.
+```html
+<div class="modal-element-overlay visible">
+    <div class="modal-element-container visible">
+        <div class="modal-element visible">
+            <span aria-hidden="true" style="visibility: collapse;"><!-- providerUid: '1553865290781', modalUid: 'TEST_MODAL_3' --></span>
+            <div class="modal-element-title">
+                <h1>Modal Title</h1>
+            </div>
+            <div class="modal-element-body">
+                <p>This is the modal body.</p>
+            </div>
+            <div class="modal-element-footer">
+                <button class="modal-element-button affirmative"></button>
+            </div>
+        </div>
+    </div>
+</div>
+```
+For these elements to appear as a modal - above the page contents, and in normal use as only dismissable by clicking a button - CSS must be applied. There is [an example that illustrates the modal styled with the behavior described](https://codepen.io/rlmcneary2/pen/LaMJVz).
 
 ## Notes
 Modal requests are queued and processed in the order they are received. Only one modal is displayed at a time.
@@ -138,7 +156,7 @@ Object that controls the display of a modal.
 |---|---|---|
 |**body**|string \| string[] \| [ModalBodyProps](#modalbodyprops)|The information to display in the main part of the modal.|
 |\[**dismissable** = false\]|boolean \| [OnDismissableModalDismissed](#ondismissablemodaldismissed)|_Optional_ if true the modal can be dismissed by clicking outside of the modal.|
-|\[**footer**\]|[ModalFooterProps](#modalfooterprops)|_Optional_ information displayed at the bottom of the modal.|
+|\[**footer**\]|[OnClickHandler](#onclickhandler) \| \[[OnClickHandler](#onclickhandler), [OnClickHandler](#onclickhandler)\] \| [ModalFooterProps](#modalfooterprops)|_Optional_ information displayed at the bottom of the modal. For a single affirmative button (i.e. "OK") pass a single OnClickHandler. For two buttons, one affirmative and one negative (i.e. "OK, "Cancel") pass an array with two OnClickHandlers. For more control use ModalFooterProps.|
 |\[**providerUid**\]|string|_Optional_ unique identifier of the provider.|
 |\[**title**\]|string \| [ModalTitleProps](#modaltitleprops)|_Optional_ title to display at the top of the modal.|
 |**uid**|string|A unique identifier for this modal. Only one modal with this unique identifier can be queued at a time.|
@@ -149,6 +167,9 @@ Data used to display the title of a modal.
 |Property|Type|Description|
 |---|---|---|
 |**content**|string \| JSX.Element|The information to display in the title. A string will be displayed as the content of an \<h1\> element.|
+
+<h3 style="margin: 40px 0 5px 0;">OnClickHandler</h3>
+A function invoked when a button is clicked. Takes no parameters and returns void.
 
 <h3 style="margin: 40px 0 5px 0;">OnDismissableModalDismissed</h3>
 A function that is invoked by a modal to indicate that the user has clicked outside of a dismissable modal. This function should be provided if the disappearance of the modal is animated and the function creator needs to start that animation. Takes no parameters and returns void.

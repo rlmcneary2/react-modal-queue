@@ -37,10 +37,6 @@ interface ModalBodyProps {
     content: string | string[] | JSX.Element;
 }
 
-// interface ModalButtonProps extends React.DOMAttributes<any> {
-//     className?: string;
-//     focus?: boolean;
-// }
 interface ModalButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
     modalFocus?: boolean;
 }
@@ -75,10 +71,10 @@ interface ModalFooterButtonProps {
  */
 interface ModalFooterButtonHandlerProps {
     /** Invoked when the affirmative button is clicked. */
-    onAffirmativeClick: () => void;
+    onAffirmativeClick: OnClickHandler;
 
     /** Optional handler for a negative response button. If not supplied the seconds button will not appear. */
-    onNegativeClick?: () => void;
+    onNegativeClick?: OnClickHandler;
 
     /** Optional toggle to set the class "primary" on one of the two buttons. */
     primary?: "affirmative" | "negative";
@@ -95,7 +91,7 @@ interface ModalOptions {
     dismissable?: boolean | OnDismissableModalDismissed;
 
     /** Information displayed at the bottom of the modal. */
-    footer?: ModalFooterProps;
+    footer?: OnClickHandler | [OnClickHandler, OnClickHandler] | ModalFooterProps;
 
     /** The unique identifier of the provider. */
     providerUid?: string;
@@ -144,6 +140,11 @@ interface ModalFooterPropsInternal extends ModalFooterProps {
 }
 
 /**
+ * A handler invoked when the user clicks or taps a button.
+ */
+type OnClickHandler = () => void;
+
+/**
  * A handler invoked when the user has requested that a dismissable modal be dismissed.
  */
 type OnDismissableModalDismissed = () => void;
@@ -160,5 +161,7 @@ export {
     ModalFooterPropsInternal,
     ModalOptions,
     ModalProviderProps,
-    ModalTitleProps
+    ModalTitleProps,
+    OnClickHandler,
+    OnDismissableModalDismissed
 };
