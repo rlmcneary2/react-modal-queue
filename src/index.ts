@@ -28,7 +28,9 @@ import {
     ModalFooterButtonProps,
     ModalFooterProps,
     ModalOptions,
-    ModalTitleProps
+    ModalTitleProps,
+    OnClickHandler,
+    OnDismissableModalDismissed
 } from "./interfaces";
 import { raiseModalElement } from "./modal-element";
 import { ModalProvider } from "./modal-provider";
@@ -42,5 +44,7 @@ export {
     ModalProvider,
     ModalOptions,
     ModalTitleProps,
+    OnClickHandler,
+    OnDismissableModalDismissed,
     raiseModalElement
 };

@@ -22,7 +22,7 @@
 
 
 import React, { forwardRef, useEffect, useRef, useState } from "react";
-import { DismissModal, ModalElementProps, ModalFooterPropsInternal, ModalOptions, ModalFooterProps } from "./interfaces";
+import { DismissModal, ModalElementProps, ModalFooterPropsInternal, ModalOptions } from "./interfaces";
 import ModalBody from "./modal-body";
 import ModalFooter from "./modal-footer";
 import ModalTitle from "./modal-title";
@@ -140,7 +140,19 @@ export default forwardRef((props: ModalElementProps, forwardedRef): JSX.Element 
             // Footer
             let nextFooterProps: ModalFooterPropsInternal;
             if (footerProps) {
-                nextFooterProps = { ...footerProps, ...{ dismiss: currentModalItem.dismissModalElement } };
+                // The props could be: an array to handle two buttons, a
+                // function to handle a single button, an instance of
+                // ModalFooterProps.
+                if (Array.isArray(footerProps)) {
+                    const [onAffirmativeClick, onNegativeClick] = footerProps;
+                    nextFooterProps = ({ content: { onAffirmativeClick, onNegativeClick } } as any);
+                } else if (typeof footerProps === "function") {
+                    nextFooterProps = ({ content: { onAffirmativeClick: footerProps } } as any);
+                } else {
+                    nextFooterProps = (footerProps as any);
+                }
+
+                nextFooterProps = { ...nextFooterProps, ...{ dismiss: currentModalItem.dismissModalElement } };
             }
 
             const footer = nextFooterProps ? (<ModalFooter {...nextFooterProps} />) : null;
