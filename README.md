@@ -70,12 +70,12 @@ The ModalProvider adds and removes elements from the document's DOM to display a
 <div class="modal-element-overlay visible">
     <div class="modal-element-container visible">
         <div class="modal-element visible">
-            <span aria-hidden="true" style="visibility: collapse;"><!-- providerUid: '1553865290781', modalUid: 'TEST_MODAL_3' --></span>
+            <span aria-hidden="true" style="visibility: collapse;"><!-- providerUid: '1553865290781', modalUid: 'MODAL_EXAMPLE' --></span>
             <div class="modal-element-title">
                 <h1>Modal Title</h1>
             </div>
             <div class="modal-element-body">
-                <p>This is the modal body.</p>
+                <p>You raised a modal!</p>
             </div>
             <div class="modal-element-footer">
                 <button class="modal-element-button affirmative"></button>
