@@ -10,7 +10,7 @@ Raise modal dialogs and views from any JavaScript code in a React application. *
 
 ## Examples
 
-A basic JavaScript and CSS implementation to display the modal above the page contents. [Demonstrates using `ModalProvider` and `raiseModalElement`](https://codepen.io/rlmcneary2/pen/LaMJVz).
+A basic JavaScript and CSS implementation to display the modal above the page contents. [Demonstrates using `ModalProvider` and `raiseModal`](https://codepen.io/rlmcneary2/pen/LaMJVz).
 
 A more complex example that demonstrates [animating the appearance and disappearance of the modal](https://codepen.io/rlmcneary2/pen/LaMJVz) using [react-transition-group](http://reactcommunity.org/react-transition-group/) and CSS.
 
@@ -35,15 +35,15 @@ export default = props => {
 };
 ```
 
-When you need to display a modal use `raiseModalElement()`. This function takes a single argument: an instance of ModalOptions with information about the modal, and returns a function that can be used to dismiss the modal when it is no longer needed.
+When you need to display a modal use `raiseModal()`. This function takes a single argument: an instance of ModalOptions with information about the modal, and returns a function that can be used to dismiss the modal when it is no longer needed.
 
 ```javascript
-import { raiseModalElement } from "react-modal-queue";
+import { raiseModal } from "react-modal-queue";
 
 export default = props => {
 
     const raiseModal = () => {
-        const dismissModal = raiseModalElement({
+        const dismissModal = raiseModal({
             body: "You raised a modal!",
             footer: () => dismissModal(),
             title: "Modal Title",
@@ -72,20 +72,20 @@ A set of buttons can be displayed in the modal's footer. There are three differe
 
 ## Style and Appearance
 
-The ModalProvider adds and removes elements from the document's DOM to display a modal. The appearance of those elements as a "modal UI element" depends entirely on the CSS that is applied to them. When a modal is created it will look like this in the DOM (the contents of title, body, and footer will vary depending on the props set) and will appear after the contents of ModalProvider.
+The ModalProvider adds and removes elements from the document's DOM to display a modal. The appearance of those elements as a "modal UI control" depends entirely on the CSS that is applied to them. When a modal is created it will look like this in the DOM (the contents of title, body, and footer will vary depending on the props set) and will appear after the contents of ModalProvider.
 ```html
-<div class="modal-element-overlay visible">
-    <div class="modal-element-container visible">
-        <div class="modal-element visible">
+<div class="modal-queue-overlay visible">
+    <div class="modal-queue-container visible">
+        <div class="modal-queue visible">
             <span aria-hidden="true" style="visibility: collapse;"><!-- providerUid: '1553865290781', modalUid: 'MODAL_EXAMPLE' --></span>
-            <div class="modal-element-title">
+            <div class="modal-queue-title">
                 <h1>Modal Title</h1>
             </div>
-            <div class="modal-element-body">
+            <div class="modal-queue-body">
                 <p>You raised a modal!</p>
             </div>
-            <div class="modal-element-footer">
-                <button class="modal-element-button affirmative"></button>
+            <div class="modal-queue-footer">
+                <button class="modal-queue-button affirmative"></button>
             </div>
         </div>
     </div>
@@ -97,7 +97,7 @@ For these elements to appear as a modal - above the page contents, and in normal
 
 Modal requests are queued and processed in the order they are received. Only one modal is displayed at a time.
 
-Showing and hiding the modal can be animated using the [react-transition-group](http://reactcommunity.org/react-transition-group/) package. Wrap the <ModalProvider> component in a transition component and the transition classes will be set on the `modal-element-overlay` element.
+Showing and hiding the modal can be animated using the [react-transition-group](http://reactcommunity.org/react-transition-group/) package. Wrap the <ModalProvider> component in a transition component and the transition classes will be set on the `modal-queue-overlay` element.
 
 If [ModalOptions](#modaloptions).dismissable is set to true or to an [OnDismissableModalDismissed](#ondismissablemodaldismissed) function then the modal can be dismissed if the user clicks anywhere outside the modal.
 
@@ -112,11 +112,11 @@ The ModalProvider allows an application to display modals. This component is pla
 |\[**uid**\]|string|_Optional_ unique identifier for this modal provider that can be used to direct a modal request to a specific provider instance.|
 |\[**children**\]|JSX.Element \| JSX.Element[]|_Optional_ components between ModalProvider opening and closing tags.|
 
-<h3 style="margin: 40px 0 0 0;">dismissModal</h3>
+<h3 style="margin: 40px 0 0 0;">DismissModal</h3>
 
-A function returned by [raiseModalElement](#raisemodalelement). When invoked it dismisses the raised modal. Takes no parameters and returns void.
+A function returned by [raiseModal](#raisemodal). When invoked it dismisses the raised modal. Takes no parameters and returns void.
 
-<h3 style="margin: 40px 0 0 0;">raiseModalElement</h3>
+<h3 style="margin: 40px 0 0 0;">raiseModal</h3>
 
 Invoke this function to display a modal.
 

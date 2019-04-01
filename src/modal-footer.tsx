@@ -29,7 +29,7 @@ import { createClassName } from "./util";
 
 
 /**
- * Defines the title component of a modal element.
+ * Defines the title component of a modal.
  */
 // tslint:disable-next-line:variable-name
 const ModalFooter = (props: ModalFooterPropsInternal): JSX.Element => {

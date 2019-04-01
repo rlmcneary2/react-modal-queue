@@ -32,7 +32,7 @@ import {
     OnClickHandler,
     OnDismissableModalDismissed
 } from "./interfaces";
-import { raiseModalElement } from "./modal-element";
+import { raiseModal } from "./modal";
 import { ModalProvider } from "./modal-provider";
 
 export {
@@ -46,5 +46,5 @@ export {
     ModalTitleProps,
     OnClickHandler,
     OnDismissableModalDismissed,
-    raiseModalElement
+    raiseModal
 };
