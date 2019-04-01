@@ -28,6 +28,7 @@ import {
     ModalFooterButtonProps,
     ModalFooterProps,
     ModalOptions,
+    ModalProviderProps,
     ModalTitleProps,
     OnClickHandler,
     OnDismissableModalDismissed
@@ -42,6 +43,7 @@ export {
     ModalFooterButtonProps,
     ModalFooterProps,
     ModalProvider,
+    ModalProviderProps,
     ModalOptions,
     ModalTitleProps,
     OnClickHandler,
