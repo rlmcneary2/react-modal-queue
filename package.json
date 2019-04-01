@@ -53,6 +53,7 @@
     "react": "^16.8.3"
   },
   "files": [
+    "dist/*.ts",
     "umd"
   ],
   "types": "dist/index.d.ts"
