@@ -23,16 +23,16 @@
 
 import PropTypes from "prop-types";
 import React, { forwardRef, useState } from "react";
-import { ModalElementProps, ModalProviderProps } from "./interfaces";
-import ModalElement from "./modal-element";
+import { ModalProps, ModalProviderProps } from "./interfaces";
+import Modal from "./modal";
 import MutationObserver, { MutationObserverProps } from "./mutation-observer";
 
 
 /**
- * The ModalProvider allows an application to display modal elements. This
+ * The ModalProvider allows an application to display modals. This
  * component is placed at the root of an application and is reponsible for
  * handling modals.
- * @param props The props for this React element.
+ * @param props The props for this React component.
  */
 // tslint:disable-next-line:variable-name
 const ModalProvider = forwardRef((props: ModalProviderProps, ref): JSX.Element => {
@@ -43,7 +43,7 @@ const ModalProvider = forwardRef((props: ModalProviderProps, ref): JSX.Element =
         onClassNameChange: className => setMutatedClassName(className)
     };
 
-    const meProps: ModalElementProps = {
+    const meProps: ModalProps = {
         mutatedClassName,
         providerUid: currentUid
     };
@@ -51,7 +51,7 @@ const ModalProvider = forwardRef((props: ModalProviderProps, ref): JSX.Element =
     return (
         <MutationObserver {...moProps}>
             {(props as any).children}
-            <ModalElement {...meProps} ref={ref} />
+            <Modal {...meProps} ref={ref} />
         </MutationObserver>
     );
 });

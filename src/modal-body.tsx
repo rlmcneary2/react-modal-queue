@@ -28,7 +28,7 @@ import { createClassName } from "./util";
 
 
 /**
- * Defines the main component of a modal element.
+ * Defines the main component of a modal.
  */
 // tslint:disable-next-line:variable-name
 const ModalBody = (props: ModalBodyProps): JSX.Element => {

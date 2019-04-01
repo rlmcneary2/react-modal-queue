@@ -25,12 +25,12 @@ import React from "react";
 
 
 /** 
- * A function that dismisses its modal element.
+ * A function that dismisses its modal.
  */
 type DismissModal = () => void;
 
 /**
- * Information displayed in the main content of a modal element.
+ * Information displayed in the main content of a modal.
  */
 interface ModalBodyProps {
     /** The main content can be one or more strings, or a component. Strings will be placed inside <p> elements. */
@@ -107,14 +107,14 @@ interface ModalOptions {
  * Props passed to a modal provider.
  */
 interface ModalProviderProps {
-    /** These are passed as elements between opening and closing <ModalProvider> tags. */
+    /** These are passed as components between opening and closing <ModalProvider> tags. */
     children?: JSX.Element | JSX.Element[];
     /** A unique identifier for this modal provider. */
     uid?: string;
 }
 
 /**
- * Data used to display the title of a modal element.
+ * Data used to display the title of a modal.
  */
 interface ModalTitleProps {
     /** The information to display in the title. A string will be displayed as the content of an <h1> element. */
@@ -123,10 +123,10 @@ interface ModalTitleProps {
 
 
 /**
- * Props passed to the internal ModalElement.
+ * Props passed to the internal Modal.
  * @protected
  */
-interface ModalElementProps {
+interface ModalProps {
     mutatedClassName?: string;
     providerUid: string;
 }
@@ -154,7 +154,7 @@ export {
     DismissModal,
     ModalBodyProps,
     ModalButtonProps,
-    ModalElementProps,
+    ModalProps,
     ModalFooterButtonHandlerProps,
     ModalFooterButtonProps,
     ModalFooterProps,

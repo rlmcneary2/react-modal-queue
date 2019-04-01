@@ -21,7 +21,7 @@
  */
 
 
-const classNameRoot = "modal-element";
+const classNameRoot = "modal-queue";
 
 const createClassName = (suffix: string): string => {
     return `${classNameRoot}-${suffix}`;

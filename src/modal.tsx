@@ -22,7 +22,7 @@
 
 
 import React, { forwardRef, useEffect, useRef, useState } from "react";
-import { DismissModal, ModalElementProps, ModalFooterPropsInternal, ModalOptions } from "./interfaces";
+import { DismissModal, ModalFooterPropsInternal, ModalOptions, ModalProps } from "./interfaces";
 import ModalBody from "./modal-body";
 import ModalFooter from "./modal-footer";
 import ModalTitle from "./modal-title";
@@ -36,14 +36,14 @@ const modalChanges: OnModalChange[] = [];
 
 
 /** 
- * The ModalElement is reponsible for displaying a modal.
+ * The Modal is reponsible for displaying a modal.
  */
-export default forwardRef((props: ModalElementProps, forwardedRef): JSX.Element => {
+export default forwardRef((props: ModalProps, forwardedRef): JSX.Element => {
     const { mutatedClassName, providerUid } = props;
 
 
     // The current modal is tracked in state.
-    const [currentModalUid, setModalElementUid] = useState(null);
+    const [currentModalUid, setModalUid] = useState(null);
 
 
     // Create functions to display or hide a modal as the queue of modal objects
@@ -62,7 +62,7 @@ export default forwardRef((props: ModalElementProps, forwardedRef): JSX.Element 
                 return;
             }
 
-            setModalElementUid(modal.modalUid);
+            setModalUid(modal.modalUid);
         };
 
         // Removes the current modal item. If another item is queued it will be
@@ -80,7 +80,7 @@ export default forwardRef((props: ModalElementProps, forwardedRef): JSX.Element 
                 nextModalUid = modal.modalUid;
             }
 
-            setModalElementUid(nextModalUid);
+            setModalUid(nextModalUid);
         };
 
         // Add our queue change listeners.
@@ -97,7 +97,7 @@ export default forwardRef((props: ModalElementProps, forwardedRef): JSX.Element 
     });
 
 
-    // If the user clicks outside of the modal element it will be dismissed when
+    // If the user clicks outside of the modal it will be dismissed when
     // ModalProp.dismissable is true.
     //
     // I'm not really crazy about how this works. Review later to see if there
@@ -114,9 +114,9 @@ export default forwardRef((props: ModalElementProps, forwardedRef): JSX.Element 
             if (typeof currentModalItem.options.dismissable === "function") {
                 currentModalItem.options.dismissable();
             } else {
-                // Let the stack for the click event unwind before dismissing the
-                // modal element.
-                setTimeout(() => currentModalItem.dismissModalElement());
+                // Let the stack for the click event unwind before dismissing
+                // the modal.
+                setTimeout(() => currentModalItem.dismissModal());
             }
         }
     };
@@ -152,7 +152,7 @@ export default forwardRef((props: ModalElementProps, forwardedRef): JSX.Element 
                     nextFooterProps = (footerProps as any);
                 }
 
-                nextFooterProps = { ...nextFooterProps, ...{ dismiss: currentModalItem.dismissModalElement } };
+                nextFooterProps = { ...nextFooterProps, ...{ dismiss: currentModalItem.dismissModal } };
             }
 
             const footer = nextFooterProps ? (<ModalFooter {...nextFooterProps} />) : null;
@@ -222,11 +222,11 @@ function findModalItem(providerUid: string, modalUid: string = null): ModalItem 
 }
 
 /**
- * Cause a modal element to be displayed.
- * @param options The options for the modal element.
- * @returns A function to dismiss the modal element.
+ * Cause a modal to be displayed.
+ * @param options The options for the modal.
+ * @returns A function to dismiss the modal.
  */
-function raiseModalElement(options: ModalOptions): DismissModal {
+function raiseModal(options: ModalOptions): DismissModal {
     const { providerUid, uid: modalUid } = options;
 
     if (!modalUid) {
@@ -247,7 +247,7 @@ function raiseModalElement(options: ModalOptions): DismissModal {
 
 
     // This function is returned to the caller to dismiss the modal.
-    const dismissModalElement: DismissModal = () => {
+    const dismissModal: DismissModal = () => {
         const index = modals.findIndex(x => x === modalItem);
         if (index < 0) {
             return;
@@ -259,17 +259,17 @@ function raiseModalElement(options: ModalOptions): DismissModal {
     };
 
 
-    modalItem.dismissModalElement = dismissModalElement;
+    modalItem.dismissModal = dismissModal;
 
     modals.push(modalItem as ModalItem);
 
     modalChanges.forEach(x => x.onModalAdd());
 
-    return dismissModalElement;
+    return dismissModal;
 }
 
 
-export { raiseModalElement };
+export { raiseModal };
 
 
 type OnModalAdd = () => void;
@@ -282,7 +282,7 @@ interface OnModalChange {
 
 interface ModalItem {
     claimedUid: string;
-    dismissModalElement: DismissModal;
+    dismissModal: DismissModal;
     options: ModalOptions;
     providerUid?: string;
     modalUid: string;
