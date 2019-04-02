@@ -124,8 +124,7 @@ Invoke this function to display a modal.
 |---|---|---|
 |**options**|[ModalOptions](#modaloptions)|The options for the modal.|
 
-#### Returns
-[DismissModal](#dismissmodal) A function to dismiss the modal that was raised.
+**Returns** [DismissModal](#dismissmodal) A function to dismiss the modal that was raised.
 
 <h3 style="margin: 40px 0 0 0;">ModalBodyProps</h3>
 
