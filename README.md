@@ -101,6 +101,10 @@ Showing and hiding the modal can be animated using the [react-transition-group](
 
 If [ModalOptions](#modaloptions).dismissable is set to true or to an [OnDismissableModalDismissed](#ondismissablemodaldismissed) function then the modal can be dismissed if the user clicks anywhere outside the modal.
 
+TypeScript declaration files are included and should be available for code completion (e.g. VS Code) when the package is included through an `import` statement.
+
+To include the package in the head of an HTML document use [UNPKG](https://unpkg.com/). There are two files available, a production version named "react-modal-queue.min.js" and a debug version "react-modal-queue.js".
+
 ## API
 
 <h3 style="margin: 40px 0 0 0;">&lt;ModalProvider&gt;</h3>
