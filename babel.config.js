@@ -34,6 +34,7 @@ module.exports = api => {
         [
             "@babel/env",
             {
+                modules: false,
                 targets: "last 2 versions, > 1%",
                 useBuiltIns: "usage"
             }
