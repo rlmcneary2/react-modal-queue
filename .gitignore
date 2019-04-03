@@ -49,6 +49,7 @@ Temporary Items
 !.vscode/settings.json
 dist
 node_modules
+tsc-temp
 umd
 
 npm-debug.log

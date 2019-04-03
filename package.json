@@ -16,13 +16,17 @@
     "type": "git",
     "url": "https://github.com/rlmcneary2/react-modal-queue.git"
   },
-  "main": "dist/react-modal-queue.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "npm run clean && webpack && webpack --env.NODE_ENV=production && npm run unpkg",
-    "clean": "rimraf ./dist ./umd",
-    "debug": "npm run clean && webpack && npm link",
+    "babel": "babel tsc-temp --out-dir dist",
+    "build": "npm run clean && npm run tsc && npm run tsc-declaration && npm run babel && npm run lib-debug && npm run lib-production",
+    "clean": "rimraf ./dist ./tsc-temp ./umd",
+    "debug": "npm run clean && npm run tsc && npm run tsc-declaration && npm run babel && npm link",
+    "tsc": "tsc --outDir tsc-temp",
+    "tsc-declaration": "tsc --declaration --emitDeclarationOnly --outDir dist",
     "test": "echo \"No tests.\"",
-    "unpkg": "copyfiles -f ./dist/*.js ./dist/*.js.map ./umd"
+    "lib-debug": "webpack --config webpack-lib.config.js",
+    "lib-production": "webpack --config webpack-lib.config.js --env.NODE_ENV=production"
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5"
@@ -36,7 +40,6 @@
     "@types/prop-types": "^15.7.0",
     "@types/react": "^16.8.7",
     "babel-loader": "^8.0.5",
-    "copyfiles": "^2.1.0",
     "rimraf": "^2.6.3",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^5.3.3",
