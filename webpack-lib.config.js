@@ -22,36 +22,41 @@
  */
 
 
-module.exports = api => {
-    if (api) {
-        api.cache.forever();
-    }
+const path = require("path");
+const webpackBaseConfig = require("./webpack-base.config");
 
-    const plugins = [
-    ];
 
-    const presets = [
-        [
-            "@babel/env",
-            {
-                targets: "last 2 versions, > 1%",
-                useBuiltIns: "usage"
+const _MODULE_NAME = "react-modal-queue";
+const _OUTPUT_DIR = "umd";
+const _SOURCE_DIR = "dist";
+
+
+module.exports = env => {
+    let config = webpackBaseConfig(env);
+    const { mode, output } = config;
+
+    let undef;
+
+    config = {
+        ...config,
+        ...{
+            devtool: `${mode === "production" ? undef : "inline-source-map"}`,
+            entry: {
+                index: `./${_SOURCE_DIR}/index.js`
+            },
+            output: {
+                ...output,
+                ...{
+                    filename: `${_MODULE_NAME}${mode === "production" ? ".min" : ""}.js`,
+                    library: { amd: _MODULE_NAME, commonjs: _MODULE_NAME, root: "ReactModalQueue" },
+                    libraryTarget: "umd",
+                    path: path.resolve(__dirname, _OUTPUT_DIR),
+                    publicPath: `/${_OUTPUT_DIR}/`,
+                    umdNamedDefine: true
+                }
             }
-        ],
-        [
-            "@babel/preset-react",
-            {
-                useBuiltIns: true
-            }
-        ]
-    ];
-
-    const sourceMaps = "inline";
-
-    return {
-        plugins,
-        presets,
-        retainLines: true,
-        sourceMaps
+        }
     };
+
+    return config;
 };
