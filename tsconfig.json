@@ -5,7 +5,7 @@
         "allowSyntheticDefaultImports": true, // This must be false for the React imports to work at both build and run times.
         "alwaysStrict": true,
         "baseUrl": ".",
-        "declaration": true,
+        // "declaration": true,
         "inlineSourceMap": true,
         "inlineSources": true,
         "jsx": "preserve",
@@ -21,7 +21,7 @@
         "noImplicitAny": true,
         "noUnusedLocals": false,
         "noUnusedParameters": true,
-        "outDir": "dist",
+        // "outDir": "tsc-temp",
         "preserveConstEnums": true,
         "removeComments": false,
         "suppressImplicitAnyIndexErrors": true,
