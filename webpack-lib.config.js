@@ -50,6 +50,7 @@ module.exports = env => {
                     filename: `${_MODULE_NAME}${mode === "production" ? ".min" : ""}.js`,
                     library: { amd: _MODULE_NAME, commonjs: _MODULE_NAME, root: "ReactModalQueue" },
                     libraryTarget: "umd",
+                    path: path.resolve(__dirname, _OUTPUT_DIR),
                     umdNamedDefine: true
                 }
             }
