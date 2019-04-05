@@ -28,6 +28,7 @@ module.exports = api => {
     }
 
     const plugins = [
+        ["babel-plugin-preserve-comment-header", { pattern: "* Copyright (c)" }] // Fixes weird whitespace added to some top of file comments resulting in significantly smaller file sizes!
     ];
 
     const presets = [

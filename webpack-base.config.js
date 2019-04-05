@@ -53,21 +53,8 @@ const config = {
     }],
     module: {
         rules: [
-            {
-                test: /\.tsx?$/,
-                exclude: [
-                    /(node_modules|bower_components)/
-                ],
-                use: [
-                    {
-                        loader: "babel-loader",
-                        options: { cacheDirectory: true }
-                    },
-                    {
-                        loader: "ts-loader",
-                    }
-                ]
-            },
+            // Files have already een processed by Babel, don't do it again! Fix
+            // up source maps, I hope.
             {
                 test: /\.jsx?$/,
                 enforce: "pre",
@@ -75,16 +62,6 @@ const config = {
                 use: [
                     {
                         loader: "source-map-loader"
-                    }
-                ]
-            },
-            {
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                use: [
-                    {
-                        loader: "babel-loader",
-                        options: { cacheDirectory: true }
                     }
                 ]
             }
